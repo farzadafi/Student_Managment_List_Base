@@ -55,4 +55,8 @@ public class Person {
 
     public Person() {
     }
+
+    protected int calcSalary(){
+        return 100000;
+    }
 }
