@@ -1,3 +1,4 @@
+import Entity.Clerk;
 import Entity.Login;
 import Manager.ClerkManager;
 import Manager.OfferLessonManager;
@@ -212,7 +213,8 @@ public class Menu {
                     break;
 
                 case 5:
-
+                    Clerk clerk = new Clerk();
+                    System.out.println("Your salary is:" + clerk.getCalcSalary());
                     break;
 
                 case 6:

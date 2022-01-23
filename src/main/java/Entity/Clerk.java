@@ -63,5 +63,9 @@ public class Clerk extends Person{
     protected int calcSalary() {
         return super.calcSalary();
     }
+
+    public int getCalcSalary(){
+        return calcSalary();
+    }
 }
 
