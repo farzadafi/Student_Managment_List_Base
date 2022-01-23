@@ -160,7 +160,7 @@ public class Menu {
                             break;
 
                         case 3:
-                            //professorManager.updateProfessor();
+                            professorManager.updateProfessor();
                             break;
 
                         default:
