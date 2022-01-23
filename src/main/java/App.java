@@ -17,6 +17,9 @@ public class App {
                     System.out.println("Have a nice day!");
                     System.exit(0);
 
+                case 3:
+                    System.out.println("You can just enter number!");
+
             }
         }
     }
