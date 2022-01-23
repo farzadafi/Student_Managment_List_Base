@@ -27,4 +27,8 @@ public class StudentService {
     public int delete(String username) throws SQLException {
         return studentRepository.delete(username);
     }
+
+    public int returnId(String username) throws SQLException {
+        return studentRepository.returnId(username);
+    }
 }
