@@ -5,6 +5,7 @@ import Service.LoginService;
 import Service.ProfessorService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -107,6 +108,43 @@ public class ProfessorManager {
         professorService.delete(username);
         loginService.delete(username);
         System.out.println(username + " successful deleted!");
+    }
+
+    public void updateProfessor() throws SQLException {
+        List<Professor> professorList = new ArrayList<>();
+        professorList = professorService.findAll();
+        if(professorList == null){
+            System.out.println("You dont have any student!");
+            return;
+        }
+        System.out.print("Enter nationalId for edit:");
+        nationalId = input.nextLine();
+        int i = 0;
+        for (Professor professor : professorList) {
+            Professor professor1 = new Professor();
+            professor1 = professor;
+            if (professor.getNationalId().equals(nationalId)) {
+                i = 1;
+                break;
+            }
+        }
+        if(i == 0){
+            System.out.println("This national id is not found!");
+            return;
+        }
+
+        System.out.print("Enter new first name:");
+        firstName = input.nextLine();
+        System.out.print("Enter new last name:");
+        lastName = input.nextLine();
+        System.out.print("Enter new password:");
+        password = input.nextLine();
+        Professor professor = new Professor(firstName,lastName,nationalId,null,password,null);
+        int result = professorService.updateProfessor(professor);
+        if(result == 0 )
+            System.out.println("something is wrong!");
+        else
+            System.out.println("Edit successful!");
     }
 
 
