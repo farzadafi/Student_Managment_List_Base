@@ -12,7 +12,7 @@ public class ClerkRepository implements Repository<Clerk> {
 
     public ClerkRepository() throws SQLException, ClassNotFoundException {
         String createTable = " CREATE TABLE IF NOT EXISTS Clerk(id serial," +
-                                                        "firstName varcha(50)," +
+                                                        "firstName varchar(50)," +
                                                         "lastName varchar(50), " +
                                                         "nationalId varchar(50), " +
                                                         "username varchar(50), " +
