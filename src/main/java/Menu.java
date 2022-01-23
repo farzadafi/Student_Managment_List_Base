@@ -229,7 +229,35 @@ public class Menu {
         }//while
     }//
 
-    public void studentMenu(String username){
+    public void studentMenu(String username) throws SQLException {
+        int idStudent = studentManager.returnId(username);
+        if(idStudent == 0){
+            System.out.println("Unfortunately your id not found!");
+            return;
+        }
+        boolean finalWhile = true;
+        while(finalWhile)
+        {
+            System.out.println("****** Hi! " + username + " ******");
+            System.out.println("1-view mySelf.");
+            System.out.println("2-view lessonList.");
+            System.out.println("3-Unit select.");
+            System.out.println("4-view lesson and grade's.");
+            System.out.println("5-Exit.");
+            System.out.print("Please select a number:");
+            try {
+                command = input.nextInt();
+            }catch (InputMismatchException exception){
+                input.nextLine();
+                System.out.println("You can just Enter number!");
+                return;
+            }
+            input.nextLine();
+            switch (command)
+            {
+
+            }//switch
+        }//while
 
     }
 
