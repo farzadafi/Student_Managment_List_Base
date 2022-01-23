@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentManager {
+    private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
     private StudentService studentService = new StudentService();
     private LoginService loginService = new LoginService();
     private Scanner input = new Scanner(System.in);
@@ -29,7 +30,7 @@ public class StudentManager {
             System.out.print("Enter nationalId:");
             nationalId = input.nextLine();
             try {
-                nationalIdChecker(nationalId);
+                invalidNationalIdException.nationalIdChecker(nationalId);
                 break;
             }catch (InvalidNationalIdException exception){
                 System.out.println("You enter a wrong nationalId!");
@@ -132,15 +133,8 @@ public class StudentManager {
             System.out.println(username + " successful deleted!");
         }
 
-        //::::>
-        public void nationalIdChecker(String nationalId){
-        if(nationalId.length() > 10 )
-            throw new InvalidNationalIdException();
-        if(nationalId.equals(""))
-            throw new InvalidNationalIdException();
-            for (Character ch:nationalId.toCharArray()) {
-                if(!Character.isDigit(ch))
-                    throw new InvalidNationalIdException();
-            }
-        }
+
+
+
+
 }
