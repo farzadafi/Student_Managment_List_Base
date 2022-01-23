@@ -1,4 +1,5 @@
 import Entity.Login;
+import Manager.StudentManager;
 import Service.LoginService;
 
 import java.sql.SQLException;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+    private StudentManager studentManager = new StudentManager();
     private Scanner input = new Scanner(System.in);
     private int command;
     private String userName,password;
@@ -78,7 +80,7 @@ public class Menu {
         }
     }
 
-    public void clerkMenu(String username) {
+    public void clerkMenu(String username) throws SQLException {
         boolean finalWhile = true;
         while (finalWhile) {
             System.out.println("****** Hi! " + username + " ******");
@@ -88,16 +90,48 @@ public class Menu {
             System.out.println("4-Unit Tools.");
             System.out.println("5-View Salary bill.");
             System.out.println("6-Exit.");
-            System.out.println("Please select:");
+            System.out.print("Please select:");
             try {
                 command = input.nextInt();
             }catch (InputMismatchException exception){
                 input.nextLine();
                 System.out.println("You can just Enter number!");
+                return;
             }
-            //input.nextLine();
+            input.nextLine();
             switch (command) {
                 case 1:
+                    System.out.println("*** Student Tool ***");
+                    System.out.println("1-Register Student.");
+                    System.out.println("2-Delete Student.");
+                    System.out.println("3-Edit Student.");
+                    System.out.print("Please select a number:");
+                    try {
+                        command = input.nextInt();
+                    }catch (InputMismatchException exception){
+                        input.nextLine();
+                        System.out.println("You can just Enter number!");
+                        return;
+                    }
+                    input.nextLine();
+                    switch (command){
+                        case 1:
+                            studentManager.addStudent();
+                            break;
+
+                        case 2:
+
+                            break;
+
+                        case 3:
+
+                            break;
+
+                        case 4:
+
+                            break;
+
+                    }
 
                     break;
 
