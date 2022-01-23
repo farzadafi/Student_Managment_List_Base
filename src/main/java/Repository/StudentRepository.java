@@ -94,6 +94,14 @@ public class StudentRepository implements Repository<Student> {
 
     @Override
     public int delete(String username) throws SQLException {
+        String delete = " DELETE FROM Student WHERE username = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(delete);
+        preparedStatement.setString(1,username);
+        try {
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
         return 0;
     }
 }
