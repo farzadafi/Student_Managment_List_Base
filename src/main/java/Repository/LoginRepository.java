@@ -12,8 +12,12 @@ public class LoginRepository implements Repository<Login> {
 
     public LoginRepository() throws SQLException, ClassNotFoundException {
         String createTable = "CREATE TABLE IF NOT EXISTS Login(username varchar(50) UNIQU ,password varchar(50),kind varchar(10))";
-        PreparedStatement preparedStatement = connection.prepareStatement(createTable);
-        preparedStatement.execute();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(createTable);
+            preparedStatement.execute();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
     }
 
 

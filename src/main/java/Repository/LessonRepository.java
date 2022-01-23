@@ -20,8 +20,14 @@ public class LessonRepository implements Repository<Lesson> {
                                                                 "yearl integer, " +
                                                                 "lastProfessorName varchar(50) REFERENCES Professor(lastName), " +
                                                                 "grade integer)";
-        PreparedStatement preparedStatement = connection.prepareStatement(createTable);
-        preparedStatement.execute();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(createTable);
+            preparedStatement.execute();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
+
+
     }
 
 

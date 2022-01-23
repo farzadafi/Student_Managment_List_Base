@@ -17,8 +17,12 @@ public class StudentRepository implements Repository<Student> {
                                                                "nationalId varchar(50), " +
                                                                "username varchar(50), " +
                                                                "password varchar(50))";
-        PreparedStatement preparedStatement = connection.prepareStatement(createTable);
-        preparedStatement.execute();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(createTable);
+            preparedStatement.execute();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
     }
 
 

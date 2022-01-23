@@ -12,8 +12,12 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
 
     public OfferLessonRepository() throws SQLException, ClassNotFoundException {
         String createTable = "CREATE TABLE IF NOT EXISTS OfferLesson(id serial,lessonName varchar(50),unitNumebr integer)";
-        PreparedStatement preparedStatement = connection.prepareStatement(createTable);
-        preparedStatement.execute();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(createTable);
+            preparedStatement.execute();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
     }
 
 
