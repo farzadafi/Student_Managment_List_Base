@@ -8,6 +8,7 @@ import Service.ClerkService;
 import Service.LoginService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,6 +94,45 @@ public class ClerkManager {
         loginService.delete(username);
         clerkService.delete(username);
         System.out.println(username + " successful deleted!");
+    }
+
+    public void updateClerk() throws SQLException {
+        List<Clerk> clerkList = new ArrayList<>();
+        clerkList = clerkService.findAll();
+        if(clerkList == null){
+            System.out.println("You dont have any student!");
+            return;
+        }
+        System.out.println("Enter nationalId for edit:");
+        nationalId = input.nextLine();
+        int i = 0;
+        for (Clerk clerk : clerkList) {
+            Clerk clerk1 = new Clerk();
+            clerk1 = clerk;
+            if (clerk.getNationalId().equals(nationalId)) {
+                i = 1;
+                break;
+            }
+        }
+        if(i == 0){
+            System.out.println("This national id is not found!");
+            return;
+        }
+
+        System.out.print("Enter new first name:");
+        firstName = input.nextLine();
+        System.out.print("Enter new last name:");
+        lastName = input.nextLine();
+        System.out.print("Enter new password:");
+        password = input.nextLine();
+        Clerk clerk = new Clerk(firstName,lastName,nationalId,null,password);
+        int result = clerkService.updateClerk(clerk);
+        if(result == 0 )
+            System.out.println("something is wrong!");
+        else
+            System.out.println("Edit successful!");
+
+
     }
 
 
