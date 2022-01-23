@@ -156,7 +156,7 @@ public class Menu {
                             break;
 
                         case 2:
-                           // professorManager.deleteProfessor();
+                            professorManager.deleteProfessor();
                             break;
 
                         case 3:
