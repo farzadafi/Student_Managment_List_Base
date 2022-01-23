@@ -17,4 +17,8 @@ public class LoginService {
     public void addLogin(Login login) throws SQLException {
         loginRepository.add(login);
     }
+
+    public int delete(String username) throws SQLException {
+        return loginRepository.delete(username);
+    }
 }
