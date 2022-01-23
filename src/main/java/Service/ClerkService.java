@@ -15,4 +15,7 @@ public class ClerkService {
         clerkRepository.add(clerk);
     }
 
+    public int delete(String username) throws SQLException {
+        return clerkRepository.delete(username);
+    }
 }
