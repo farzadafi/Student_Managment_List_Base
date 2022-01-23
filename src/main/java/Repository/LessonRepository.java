@@ -2,6 +2,7 @@ package Repository;
 
 import Entity.Lesson;
 
+import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -14,7 +15,6 @@ public class LessonRepository implements Repository<Lesson> {
         String createTable = " CREATE TABLE IF NOT EXISTS Lesson(id serial" +
                                                                 "idStudent integer," +
                                                                 "lessonName varchar(50) REFERENCES OfferLesson(lessonName), " +
-                                                                "nationalId varchar(50) REFERENCES Student(nationalId), " +
                                                                 "quarterNumber integer, " +
                                                                 "unitNumber integer REFERENCES OfferLesson(unitNumber), " +
                                                                 "yearl integer, " +
@@ -33,6 +33,20 @@ public class LessonRepository implements Repository<Lesson> {
 
     @Override
     public int add(Lesson lesson) throws SQLException {
+        String add = " INSERT INTO Lesson (idStudent,lessonName,quarterNumber,unitNumber,yearl,lastProfessorName,grade) VALUES (?,?,?,?,?,?,?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(add);
+        preparedStatement.setInt(1,lesson.getIdStudent());
+        preparedStatement.setString(2,lesson.getLessonName());
+        preparedStatement.setInt(3,lesson.getQuarterNumber());
+        preparedStatement.setInt(4,lesson.getUnitNumber());
+        preparedStatement.setInt(5,lesson.getYear());
+        preparedStatement.setString(6,lesson.getLastProfessorName());
+        preparedStatement.setInt(7,lesson.getGrade());
+        try {
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
         return 0;
     }
 
