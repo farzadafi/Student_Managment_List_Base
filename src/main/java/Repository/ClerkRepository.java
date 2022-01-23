@@ -28,7 +28,6 @@ public class ClerkRepository implements Repository<Clerk> {
 
     @Override
     public int add(Clerk clerk) throws SQLException {
-        /*
         String add = " INSERT INTO Clerk (firstName,lastName,nationalId,username,password) VALUES (? ,? ,?, ?, ?)";
         PreparedStatement preparedStatement = connection.prepareStatement(add);
         preparedStatement.setString(1, clerk.getFirstName());
@@ -36,8 +35,12 @@ public class ClerkRepository implements Repository<Clerk> {
         preparedStatement.setString(3, clerk.getNationalId());
         preparedStatement.setString(4, clerk.getUsername());
         preparedStatement.setString(5, clerk.getPassword());
-        return preparedStatement.executeUpdate();
-         */
+        try {
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
+        return 0;
     }
 
 
