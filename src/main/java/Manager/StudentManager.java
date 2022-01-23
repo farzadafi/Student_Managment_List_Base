@@ -133,6 +133,10 @@ public class StudentManager {
             System.out.println(username + " successful deleted!");
         }
 
+        public int returnId(String username) throws SQLException {
+        return studentService.returnId(username);
+        }
+
 
 
 
