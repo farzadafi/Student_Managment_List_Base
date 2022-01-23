@@ -124,7 +124,7 @@ public class Menu {
                             break;
 
                         case 3:
-
+                            studentManager.updateStudent();
                             break;
 
                         case 4:
