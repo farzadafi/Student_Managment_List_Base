@@ -12,7 +12,7 @@ public class ProfessorRepository implements Repository<Professor> {
 
     public ProfessorRepository() throws SQLException, ClassNotFoundException {
         String createTable = " CREATE TABLE IF NOT EXISTS Professor(id serial" +
-                                                               "firstName varcahr(50)," +
+                                                               "firstName varchar(50)," +
                                                                "lastName varchar(50), " +
                                                                "nationalId varchar(50), " +
                                                                "username varchar(50), " +
@@ -29,6 +29,19 @@ public class ProfessorRepository implements Repository<Professor> {
 
     @Override
     public int add(Professor professor) throws SQLException {
+        String add = " INSERT INTO Professor(firstName,lastName,nationalId,username,password,kindProfessor) VALUES (?, ?, ?, ?, ?, ?)";
+        PreparedStatement preparedStatement = connection.prepareStatement(add);
+        preparedStatement.setString(1,professor.getFirstName());
+        preparedStatement.setString(2,professor.getLastName());
+        preparedStatement.setString(3,professor.getNationalId());
+        preparedStatement.setString(4,professor.getUsername());
+        preparedStatement.setString(5,professor.getPassword());
+        preparedStatement.setString(6, String.valueOf(professor.getProfessorType()));
+        try {
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
         return 0;
     }
 
