@@ -1,10 +1,13 @@
 package Repository;
 
 import Entity.Clerk;
+import Entity.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClerkRepository implements Repository<Clerk> {
@@ -46,12 +49,47 @@ public class ClerkRepository implements Repository<Clerk> {
 
     @Override
     public List<Clerk> findAll() throws SQLException {
-        return null;
+        String find = "SELECT * FROM Clerk ";
+        PreparedStatement preparedStatement = connection.prepareStatement(find);
+        List<Clerk> clerkList = new ArrayList<>();
+        ResultSet resultSet;
+        try{
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return null;
+        }
+        if(resultSet.isBeforeFirst()){
+            while(resultSet.next()) {
+                Clerk clerk = new Clerk();
+                clerk.setFirstName(resultSet.getString("firstname"));
+                clerk.setLastName(resultSet.getString("lastName"));
+                clerk.setNationalId(resultSet.getString("nationalId"));
+                clerk.setUsername(resultSet.getString("username"));
+                clerk.setPassword(resultSet.getString("password"));
+                clerkList.add(clerk);
+            }
+            return clerkList;
+        }
+        else
+            return null;
     }
 
     @Override
     public int update(Clerk clerk) throws SQLException {
-        return 0;
+        String update =  "UPDATE Clerk SET firstname = ? , lastName = ? , password = ? WHERE nationalId = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(update);
+        preparedStatement.setString(1,clerk.getFirstName());
+        preparedStatement.setString(2,clerk.getLastName());
+        preparedStatement.setString(3,clerk.getPassword());
+        preparedStatement.setString(4,clerk.getNationalId());
+        try{
+            preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return 0;
+        }
+        return 1;
     }
 
     @Override
