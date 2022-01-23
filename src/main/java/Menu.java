@@ -195,7 +195,7 @@ public class Menu {
                             break;
 
                         case 3:
-                            //studentManager.updateStudent();
+                            clerkManager.updateClerk();
                             break;
 
                         default:
