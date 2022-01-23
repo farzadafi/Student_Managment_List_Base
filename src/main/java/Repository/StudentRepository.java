@@ -77,7 +77,19 @@ public class StudentRepository implements Repository<Student> {
 
     @Override
     public int update(Student student) throws SQLException {
-        return 0;
+        String update =  "UPDATE Student SET firstname = ? , lastName = ? , password = ? WHERE nationalId = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(update);
+        preparedStatement.setString(1,student.getFirstName());
+        preparedStatement.setString(2,student.getLastName());
+        preparedStatement.setString(3,student.getPassword());
+        preparedStatement.setString(4,student.getNationalId());
+        try{
+            preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return 0;
+        }
+        return 1;
     }
 
     @Override
