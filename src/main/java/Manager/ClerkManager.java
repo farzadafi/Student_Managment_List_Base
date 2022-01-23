@@ -67,4 +67,33 @@ public class ClerkManager {
         loginService.addLogin(login);
         System.out.println(firstName + " successful added!");
     }
+
+    public void deleteClerk() throws SQLException {
+        System.out.print("Enter username for delete:");
+        username = input.nextLine();
+        List<Login> loginList = loginService.findAll();
+        if(loginList == null){
+            System.out.println("Table is empty");
+            return;
+        }
+        int i = 0;
+        for (Login login:loginList)
+        {
+            Login login1 = new Login();
+            login1 = login;
+            if(login.getUsername().equals(username)){
+                i = 1;
+                break;
+            }
+        }
+        if(i == 0) {
+            System.out.println("This username isn't defined before!");
+            return;
+        }
+        loginService.delete(username);
+        clerkService.delete(username);
+        System.out.println(username + " successful deleted!");
+    }
+
+
 }
