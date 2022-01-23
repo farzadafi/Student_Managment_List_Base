@@ -23,4 +23,8 @@ public class StudentService {
     public int updateStudent(Student student) throws SQLException {
         return studentRepository.update(student);
     }
+
+    public int delete(String username) throws SQLException {
+        return studentRepository.delete(username);
+    }
 }
