@@ -16,4 +16,8 @@ public class ProfessorService {
     public void addProfessor(Professor professor) throws SQLException {
         professorRepository.add(professor);
     }
+
+    public int delete(String username) throws SQLException {
+        return professorRepository.delete(username);
+    }
 }
