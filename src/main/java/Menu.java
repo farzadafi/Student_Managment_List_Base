@@ -1,4 +1,5 @@
 import Entity.Login;
+import Manager.ProfessorManager;
 import Manager.StudentManager;
 import Service.LoginService;
 
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+    private ProfessorManager professorManager = new ProfessorManager();
     private StudentManager studentManager = new StudentManager();
     private Scanner input = new Scanner(System.in);
     private int command;
@@ -127,16 +129,44 @@ public class Menu {
                             studentManager.updateStudent();
                             break;
 
-                        case 4:
-
-                            break;
+                        default:
+                            System.out.println("You enter a wrong number!");
 
                     }
 
                     break;
 
                 case 2:
+                    System.out.println("*** Professor Tool ***");
+                    System.out.println("1-Register Professor.");
+                    System.out.println("2-Delete Professor.");
+                    System.out.println("3-Edit Professor.");
+                    System.out.print("Please select a number:");
+                    try {
+                        command = input.nextInt();
+                    }catch (InputMismatchException exception){
+                        input.nextLine();
+                        System.out.println("You can just Enter number!");
+                        return;
+                    }
+                    input.nextLine();
+                    switch (command){
+                        case 1:
+                            professorManager.addProfessor();
+                            break;
 
+                        case 2:
+                           // professorManager.deleteProfessor();
+                            break;
+
+                        case 3:
+                            //professorManager.updateProfessor();
+                            break;
+
+                        default:
+                            System.out.println("You enter a wrong number!");
+
+                    }
                     break;
 
                 case 3:
