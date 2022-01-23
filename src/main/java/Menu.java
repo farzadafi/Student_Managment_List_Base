@@ -191,7 +191,7 @@ public class Menu {
                             break;
 
                         case 2:
-                            //studentManager.deleteStudent();
+                            clerkManager.deleteClerk();
                             break;
 
                         case 3:
