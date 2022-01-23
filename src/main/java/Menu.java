@@ -1,4 +1,5 @@
 import Entity.Login;
+import Manager.ClerkManager;
 import Manager.ProfessorManager;
 import Manager.StudentManager;
 import Service.LoginService;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+    private ClerkManager clerkManager = new ClerkManager();
     private ProfessorManager professorManager = new ProfessorManager();
     private StudentManager studentManager = new StudentManager();
     private Scanner input = new Scanner(System.in);
@@ -170,7 +172,36 @@ public class Menu {
                     break;
 
                 case 3:
+                    System.out.println("*** Clerk Tool ***");
+                    System.out.println("1-Register clerk.");
+                    System.out.println("2-Delete clerk.");
+                    System.out.println("3-Edit clerk.");
+                    System.out.print("Please select a number:");
+                    try {
+                        command = input.nextInt();
+                    }catch (InputMismatchException exception){
+                        input.nextLine();
+                        System.out.println("You can just Enter number!");
+                        return;
+                    }
+                    input.nextLine();
+                    switch (command){
+                        case 1:
+                            clerkManager.addClerk();
+                            break;
 
+                        case 2:
+                            //studentManager.deleteStudent();
+                            break;
+
+                        case 3:
+                            //studentManager.updateStudent();
+                            break;
+
+                        default:
+                            System.out.println("You enter a wrong number!");
+
+                    }
                     break;
 
                 case 4:
