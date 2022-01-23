@@ -1,17 +1,20 @@
 package Repository;
 
 import Entity.Login;
+import Entity.TypeUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LoginRepository implements Repository<Login> {
     Connection connection = Singleton.getInstance().getConnection();
 
     public LoginRepository() throws SQLException, ClassNotFoundException {
-        String createTable = "CREATE TABLE IF NOT EXISTS Login(username varchar(50) UNIQU ,password varchar(50),kind varchar(10))";
+        String createTable = "CREATE TABLE IF NOT EXISTS Login(username varchar(50) UNIQUE,password varchar(50),kind varchar(10))";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
@@ -38,7 +41,28 @@ public class LoginRepository implements Repository<Login> {
 
     @Override
     public List<Login> findAll() throws SQLException {
-        return null;
+        String find = "SELECT * FROM Login";
+        PreparedStatement preparedStatement = connection.prepareStatement(find);
+        List<Login> loginList = new ArrayList<>();
+        ResultSet resultSet;
+        try{
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return null;
+        }
+        if(resultSet.isBeforeFirst()){
+            while(resultSet.next()) {
+                Login login = new Login();
+                login.setUsername(resultSet.getString("username"));
+                login.setPassword(resultSet.getString("password"));
+                login.setTypeUser(TypeUser.valueOf(resultSet.getString("kind")));
+                loginList.add(login);
+            }
+            return loginList;
+        }
+        else
+            return null;
     }
 
     @Override
@@ -50,4 +74,8 @@ public class LoginRepository implements Repository<Login> {
     public int delete(int id) throws SQLException {
         return 0;
     }
+
+
+
+
 }
