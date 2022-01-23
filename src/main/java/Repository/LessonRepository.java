@@ -12,7 +12,7 @@ public class LessonRepository implements Repository<Lesson> {
     Connection connection = Singleton.getInstance().getConnection();
 
     public LessonRepository() throws SQLException, ClassNotFoundException {
-        String createTable = " CREATE TABLE IF NOT EXISTS Lesson(id serial" +
+        String createTable = " CREATE TABLE IF NOT EXISTS Lesson(id serial," +
                                                                 "idStudent integer," +
                                                                 "lessonName varchar(50) REFERENCES OfferLesson(lessonName), " +
                                                                 "quarterNumber integer, " +

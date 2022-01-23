@@ -26,11 +26,11 @@ public class LoginRepository implements Repository<Login> {
 
     @Override
     public int add(Login login) throws SQLException {
-        String add = " INSERT INTO Login(username,password,kind)";
+        String add = " INSERT INTO Login(username,password,kind) VALUES (? ,? ,?)";
         PreparedStatement preparedStatement = connection.prepareStatement(add);
         preparedStatement.setString(1,login.getUsername());
         preparedStatement.setString(2,login.getPassword());
-        preparedStatement.setString(3, String.valueOf(login.getTypeUser()));
+        preparedStatement.setString(3,String.valueOf(login.getTypeUser()));
         try {
             return preparedStatement.executeUpdate();
         }catch (SQLException sql){

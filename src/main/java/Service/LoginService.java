@@ -13,4 +13,8 @@ public class LoginService {
     public List<Login> findAll() throws SQLException {
         return loginRepository.findAll();
     }
+
+    public void addLogin(Login login) throws SQLException {
+        loginRepository.add(login);
+    }
 }

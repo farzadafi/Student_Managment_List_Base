@@ -11,7 +11,7 @@ public class StudentRepository implements Repository<Student> {
     Connection connection = Singleton.getInstance().getConnection();
 
     public StudentRepository() throws SQLException, ClassNotFoundException {
-        String createTable = " CREATE TABLE IF NOT EXISTS Student(id serial" +
+        String createTable = " CREATE TABLE IF NOT EXISTS Student(id serial," +
                                                                "firstName varchar(50)," +
                                                                "lastName varchar(50), " +
                                                                "nationalId varchar(50), " +
