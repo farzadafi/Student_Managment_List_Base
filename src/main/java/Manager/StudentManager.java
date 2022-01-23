@@ -7,6 +7,7 @@ import Service.LoginService;
 import Service.StudentService;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -38,22 +39,22 @@ public class StudentManager {
             System.out.print("Enter username:");
             username = input.nextLine();
             List<Login> loginList = loginService.findAll();
-            try{
+            if(loginList == null)
+                break;
+            int i = 0;
                 for (Login login:loginList)
                 {
                     Login login1 = new Login();
                     login1 = login;
                     if(login.getUsername().equals(username)){
-                        System.out.println("This username define before!");
+                        i = 1;
                         break;
                     }
-                    else
-                        break;
                 }
-                break;
-            }catch (Exception exception){
-                break;
-            }
+                if(i == 1)
+                    System.out.println("This username is defined before!");
+                else
+                    break;
         }
         System.out.print("Enter password:");
         password = input.nextLine();
@@ -65,11 +66,52 @@ public class StudentManager {
         }
 
 
+        public void updateStudent() throws SQLException {
+            List<Student> studentList = new ArrayList<>();
+            studentList = studentService.findAll();
+            if(studentList == null){
+                System.out.println("You dont have any student!");
+                return;
+            }
+            System.out.println("Enter nationalId for edit:");
+            nationalId = input.nextLine();
+            int i = 0;
+                for (Student student : studentList) {
+                    Student student1 = new Student();
+                    student1 = student;
+                    if (student.getNationalId().equals(nationalId)) {
+                        i = 1;
+                        break;
+                    }
+                }
+                if(i == 0){
+                    System.out.println("This national id is not found!");
+                    return;
+                }
+
+            System.out.print("Enter new first name:");
+            firstName = input.nextLine();
+            System.out.print("Enter new last name:");
+            lastName = input.nextLine();
+            System.out.print("Enter new password:");
+            password = input.nextLine();
+            Student student = new Student(firstName,lastName,nationalId,null,password);
+            int result = studentService.updateStudent(student);
+            if(result == 0 )
+                System.out.println("something is wrong!");
+            else
+                System.out.println("Edit successful!");
+
+
+        }
+
+
         //::::>
         public void nationalIdChecker(String nationalId){
-        if(nationalId.length() > 10 ){
+        if(nationalId.length() > 10 )
             throw new InvalidNationalIdException();
-        }
+        if(nationalId.equals(""))
+            throw new InvalidNationalIdException();
             for (Character ch:nationalId.toCharArray()) {
                 if(!Character.isDigit(ch))
                     throw new InvalidNationalIdException();
