@@ -104,4 +104,23 @@ public class StudentRepository implements Repository<Student> {
         }
         return 0;
     }
+
+    public int returnId(String username) throws SQLException {
+        String id = "SELECT * FROM Student WHERE username = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(id);
+        preparedStatement.setString(1,username);
+        ResultSet resultSet;
+        try {
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
+            return 0;
+        }
+        if(resultSet.next()){
+            return resultSet.getInt("id");
+        }
+        else
+            return 0;
+
+    }
 }
