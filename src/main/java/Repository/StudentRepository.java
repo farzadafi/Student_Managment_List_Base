@@ -1,10 +1,14 @@
 package Repository;
 
+import Entity.Login;
 import Entity.Student;
+import Entity.TypeUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepository implements Repository<Student> {
@@ -45,7 +49,30 @@ public class StudentRepository implements Repository<Student> {
 
     @Override
     public List<Student> findAll() throws SQLException {
-        return null;
+        String find = "SELECT * FROM Student ";
+        PreparedStatement preparedStatement = connection.prepareStatement(find);
+        List<Student> studentList = new ArrayList<>();
+        ResultSet resultSet;
+        try{
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return null;
+        }
+        if(resultSet.isBeforeFirst()){
+            while(resultSet.next()) {
+                Student student = new Student();
+                student.setFirstName(resultSet.getString("firstname"));
+                student.setLastName(resultSet.getString("lastName"));
+                student.setNationalId(resultSet.getString("nationalId"));
+                student.setUsername(resultSet.getString("username"));
+                student.setPassword(resultSet.getString("password"));
+                studentList.add(student);
+            }
+            return studentList;
+        }
+        else
+            return null;
     }
 
     @Override
