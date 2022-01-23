@@ -61,7 +61,7 @@ public class LessonRepository implements Repository<Lesson> {
     }
 
     @Override
-    public int delete(int id) throws SQLException {
+    public int delete(String username) throws SQLException {
         return 0;
     }
 }

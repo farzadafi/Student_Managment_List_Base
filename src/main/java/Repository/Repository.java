@@ -10,6 +10,6 @@ public interface Repository<T> {
 
     int update(T t) throws SQLException;
 
-    int delete(int id) throws SQLException;
+    int delete(String input) throws SQLException;
 
 }

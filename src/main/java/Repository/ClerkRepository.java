@@ -55,7 +55,7 @@ public class ClerkRepository implements Repository<Clerk> {
     }
 
     @Override
-    public int delete(int id) throws SQLException {
+    public int delete(String username) throws SQLException {
         return 0;
     }
 }

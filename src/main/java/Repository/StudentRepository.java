@@ -93,7 +93,7 @@ public class StudentRepository implements Repository<Student> {
     }
 
     @Override
-    public int delete(int id) throws SQLException {
+    public int delete(String username) throws SQLException {
         return 0;
     }
 }
