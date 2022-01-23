@@ -120,7 +120,7 @@ public class Menu {
                             break;
 
                         case 2:
-
+                            studentManager.deleteStudent();
                             break;
 
                         case 3:
