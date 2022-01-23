@@ -1,10 +1,14 @@
 package Repository;
 
 import Entity.Professor;
+import Entity.ProfessorType;
+import Entity.Student;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorRepository implements Repository<Professor> {
@@ -47,12 +51,48 @@ public class ProfessorRepository implements Repository<Professor> {
 
     @Override
     public List<Professor> findAll() throws SQLException {
-        return null;
+        String find = "SELECT * FROM Professor ";
+        PreparedStatement preparedStatement = connection.prepareStatement(find);
+        List<Professor> professorList = new ArrayList<>();
+        ResultSet resultSet;
+        try{
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return null;
+        }
+        if(resultSet.isBeforeFirst()){
+            while(resultSet.next()) {
+                Professor professor = new Professor();
+                professor.setFirstName(resultSet.getString("firstname"));
+                professor.setLastName(resultSet.getString("lastName"));
+                professor.setNationalId(resultSet.getString("nationalId"));
+                professor.setUsername(resultSet.getString("username"));
+                professor.setPassword(resultSet.getString("password"));
+                professor.setProfessorType(ProfessorType.valueOf(resultSet.getString("kindProfessor")));
+                professorList.add(professor);
+            }
+            return professorList;
+        }
+        else
+            return null;
     }
 
     @Override
     public int update(Professor professor) throws SQLException {
-        return 0;
+        String update =  "UPDATE Professor SET firstname = ? , lastName = ? , password = ? WHERE nationalId = ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(update);
+        preparedStatement.setString(1,professor.getFirstName());
+        preparedStatement.setString(2,professor.getLastName());
+        preparedStatement.setString(3,professor.getPassword());
+        preparedStatement.setString(4,professor.getNationalId());
+        try{
+            preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return 0;
+        }
+        return 1;
     }
 
     @Override
