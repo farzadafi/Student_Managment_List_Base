@@ -78,9 +78,56 @@ public class Menu {
         }
     }
 
-    public void clerkMenu(String username){
+    public void clerkMenu(String username) {
+        boolean finalWhile = true;
+        while (finalWhile) {
+            System.out.println("****** Hi! " + username + " ******");
+            System.out.println("1-Student Tools.");
+            System.out.println("2-Professor Tools.");
+            System.out.println("3-Clerk Tools.");
+            System.out.println("4-Unit Tools.");
+            System.out.println("5-View Salary bill.");
+            System.out.println("6-Exit.");
+            System.out.println("Please select:");
+            try {
+                command = input.nextInt();
+            }catch (InputMismatchException exception){
+                input.nextLine();
+                System.out.println("You can just Enter number!");
+            }
+            //input.nextLine();
+            switch (command) {
+                case 1:
 
-    }
+                    break;
+
+                case 2:
+
+                    break;
+
+                case 3:
+
+                    break;
+
+                case 4:
+
+                    break;
+
+                case 5:
+
+                    break;
+
+                case 6:
+                    System.out.println("Good luck!");
+                    finalWhile = false;
+                    break;
+
+                default:
+                    System.out.println("You enter a wrong number!");
+
+            }//switch
+        }//while
+    }//
 
     public void studentMenu(String username){
 
