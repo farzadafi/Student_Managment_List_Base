@@ -23,6 +23,15 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
 
     @Override
     public int add(OfferLesson offerLesson) throws SQLException {
+        String add = " INSERT INTO OfferLesson(lessonName,unitNumber)";
+        PreparedStatement preparedStatement = connection.prepareStatement(add);
+        preparedStatement.setString(1,offerLesson.getLessonName());
+        preparedStatement.setInt(2,offerLesson.getUnitNumber());
+        try {
+            return preparedStatement.executeUpdate();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+        }
         return 0;
     }
 
