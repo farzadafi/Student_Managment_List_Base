@@ -1,8 +1,10 @@
 import Entity.Login;
 import Manager.ClerkManager;
+import Manager.OfferLessonManager;
 import Manager.ProfessorManager;
 import Manager.StudentManager;
 import Service.LoginService;
+import Service.OfferLessonService;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
@@ -10,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+    private OfferLessonManager offerLessonManager = new OfferLessonManager();
     private ClerkManager clerkManager = new ClerkManager();
     private ProfessorManager professorManager = new ProfessorManager();
     private StudentManager studentManager = new StudentManager();
@@ -205,7 +208,7 @@ public class Menu {
                     break;
 
                 case 4:
-
+                    offerLessonManager.OfferLesson();
                     break;
 
                 case 5:
