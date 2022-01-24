@@ -77,4 +77,8 @@ public class Professor extends Person {
     protected int calcSalary() {
         return super.calcSalary();
     }
+
+    public int calcSalaryBill(){
+        return calcSalary();
+    }
 }
