@@ -277,7 +277,42 @@ public class Menu {
 
     }
 
-    public void professorMenu(String username){
+    public void professorMenu(String username) throws SQLException {
+        boolean falseWhile = true;
+        while(falseWhile)
+        {
+            System.out.println("****** Hi! " + username + " ******");
+            System.out.println("1-Register grad's Student.");
+            System.out.println("2-view salary bill.");
+            System.out.println("3-Exit.");
+            System.out.print("please select a number:");
+            try {
+                command = input.nextInt();
+            }catch (InputMismatchException exception){
+                input.nextLine();
+                System.out.println("You can just Enter number!");
+                return;
+            }
+            input.nextLine();
+            switch (command){
+                case 1:
+                    lessonManager.addGrade(username);
+                    break;
+
+                case 2:
+
+                    break;
+
+                case 3:
+                    System.out.println("Good luck!");
+                    falseWhile = false;
+                    break;
+
+                default:
+                    System.out.println("You enter a wrong number!");
+            }
+
+            }
 
     }
 
