@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClerkManager {
+    private InvalidUsername invalidUsername = new InvalidUsername();
+    private InvalidName invalidName = new InvalidName();
     private ClerkService clerkService = new ClerkService();
     private LoginService loginService = new LoginService();
     private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
@@ -24,12 +26,24 @@ public class ClerkManager {
 
 
     public void addClerk() throws SQLException {
-        System.out.print("Enter first name:");
-        firstName = input.nextLine();
-        System.out.print("Enter last name:");
-        lastName = input.nextLine();
+        System.out.print("Enter first name(just alpha):");
+        try {
+            firstName = input.nextLine();
+            invalidName.checkName(firstName);
+        }catch (InvalidName name){
+            System.out.println(name.getMessage());
+            return;
+        }
+        System.out.print("Enter last name(just alpha):");
+        try {
+            lastName = input.nextLine();
+            invalidName.checkName(lastName);
+        }catch (InvalidName name){
+            System.out.println(name.getMessage());
+            return;
+        }
         while(true) {
-            System.out.print("Enter nationalId:");
+            System.out.print("Enter nationalId(just digit):");
             nationalId = input.nextLine();
             try {
                 invalidNationalIdException.nationalIdChecker(nationalId);
@@ -39,8 +53,14 @@ public class ClerkManager {
             }
         }
         while(true) {
-            System.out.print("Enter username:");
-            username = input.nextLine();
+            System.out.print("Enter username(start with alpha):");
+            try {
+                username = input.nextLine();
+                invalidUsername.checkUsername(username);
+            }catch (InvalidUsername except){
+                System.out.println(except.getMessage());
+                return;
+            }
             List<Login> loginList = loginService.findAll();
             if(loginList == null)
                 break;
