@@ -5,7 +5,9 @@ import Entity.Lesson;
 import javax.imageio.plugins.jpeg.JPEGImageReadParam;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LessonRepository implements Repository<Lesson> {
@@ -53,7 +55,30 @@ public class LessonRepository implements Repository<Lesson> {
 
     @Override
     public List<Lesson> findAll() throws SQLException {
-        return null;
+        String find = " SELECT * FROM Lesson ";
+        PreparedStatement preparedStatement = connection.prepareStatement(find);
+        ResultSet resultSet;
+        List<Lesson> lessonList = new ArrayList<>();
+        try{
+            resultSet = preparedStatement.executeQuery();
+        }catch (SQLException sql){
+            System.out.println(sql.getMessage());
+            return null;
+        }
+        if(resultSet.isBeforeFirst()){
+            while(resultSet.next()){
+                Lesson lesson = new Lesson();
+                lesson.setIdStudent(resultSet.getInt("idStudent"));
+                lesson.setLessonName(resultSet.getString("lessonName"));
+                lesson.setQuarterNumber(resultSet.getInt("quarterNumber"));
+                lesson.setUnitNumber(resultSet.getInt("unitNumber"));
+                lesson.setYear(resultSet.getInt("yearl"));
+                lesson.setLastProfessorName(resultSet.getString("lastProfessorName"));
+                lesson.setGrade(resultSet.getInt("grade"));
+                lessonList.add(lesson);
+            }
+        }
+        return lessonList;
     }
 
     @Override
