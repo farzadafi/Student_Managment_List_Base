@@ -300,7 +300,7 @@ public class Menu {
                     break;
 
                 case 2:
-
+                    professorManager.viewSalaryBill(username);
                     break;
 
                 case 3:
