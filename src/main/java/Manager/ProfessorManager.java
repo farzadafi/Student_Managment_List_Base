@@ -1,6 +1,7 @@
 package Manager;
 
 import Entity.*;
+import Service.LessonService;
 import Service.LoginService;
 import Service.ProfessorService;
 
@@ -10,12 +11,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProfessorManager {
+    private LessonService lessonService = new LessonService();
+    private LessonManager lessonManager = new LessonManager();
     private ProfessorService professorService = new ProfessorService();
     private LoginService loginService = new LoginService();
     private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
     private Scanner input = new Scanner(System.in);
     private String firstName,lastName,username,password,nationalId;
-    private ProfessorType professorType;
+    private Professor professor = new Professor();
 
     public ProfessorManager() throws SQLException, ClassNotFoundException {
     }
@@ -147,6 +150,51 @@ public class ProfessorManager {
             System.out.println("Edit successful!");
     }
 
+
+    public void viewSalaryBill(String username) throws SQLException {
+        String lastName = lessonManager.findLastName(username);
+        int unitNumber = calcUnitNumber(lastName);
+        if(isCommit(username)) {
+            System.out.println(professor.calcSalaryBill());
+            System.out.println("Your Salary is: " + (professor.calcSalaryBill() + 1000000));
+        }
+        else
+            System.out.println("Your Salary is: " + (professor.calcSalaryBill() + (unitNumber * 50000)));
+    }
+
+    public int calcUnitNumber(String lastName) throws SQLException {
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList = lessonService.findAll();
+        if(lessonList == null)
+            return 0;
+
+        int sum = 0;
+        for (Lesson lesson:lessonList
+             ) {
+            Lesson lesson1 = new Lesson();
+            lesson1 = lesson;
+            if(lesson1.getLastProfessorName().equals(lastName))
+                sum += lesson1.getUnitNumber();
+        }
+        return sum;
+    }
+
+    public boolean isCommit(String username) throws SQLException {
+        List<Professor> professorList = new ArrayList<>();
+        professorList = professorService.findAll();
+
+        for (Professor pro:professorList
+             ) {
+            Professor professor = new Professor();
+            professor = pro;
+            if(professor.getUsername().equals(username))
+                if(professor.getProfessorType().toString().equals("SCIENCE"))
+                    return true;
+                else
+                    return false;
+        }
+        return false;
+    }
 
 
 
