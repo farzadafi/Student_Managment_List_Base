@@ -63,4 +63,16 @@ public class OfferLessonManager {
         System.out.println(lessonName + " is successful added!");
 
     }
+
+    public void showAll() throws SQLException {
+        List<OfferLesson> offerLessonList = offerLessonService.findAll();
+        if(offerLessonList == null ){
+            System.out.println("Offer list is empty!");
+            return;
+        }
+        for (OfferLesson offer:offerLessonList) {
+            System.out.println(offer.toString());
+        }
+
+    }
 }
