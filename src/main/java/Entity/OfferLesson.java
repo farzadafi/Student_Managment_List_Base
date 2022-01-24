@@ -36,4 +36,13 @@ public class OfferLesson {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "OfferLesson{" +
+                "id=" + id +
+                ", lessonName='" + lessonName + '\'' +
+                ", unitNumber=" + unitNumber +
+                '}';
+    }
 }
