@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentManager {
+    private InvalidName invalidName = new InvalidName();
+    private InvalidUsername invalidUsername = new InvalidUsername();
     private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
     private StudentService studentService = new StudentService();
     private LoginService loginService = new LoginService();
@@ -22,10 +24,22 @@ public class StudentManager {
     }
 
     public void addStudent() throws SQLException {
-        System.out.print("Enter first name:");
-        firstName = input.nextLine();
-        System.out.print("Enter last name:");
-        lastName = input.nextLine();
+        System.out.print("Enter first name(just alpha):");
+        try {
+            firstName = input.nextLine();
+            invalidName.checkName(firstName);
+        }catch (InvalidName except){
+            System.out.println(except.getMessage());
+            return;
+        }
+        System.out.print("Enter last name(just alpha):");
+        try {
+            lastName = input.nextLine();
+            invalidName.checkName(lastName);
+        }catch (InvalidName except){
+            System.out.println(except.getMessage());
+            return;
+        }
         while(true) {
             System.out.print("Enter nationalId:");
             nationalId = input.nextLine();
@@ -37,8 +51,14 @@ public class StudentManager {
             }
         }
         while(true) {
-            System.out.print("Enter username:");
-            username = input.nextLine();
+            System.out.print("Enter username(start with alpha):");
+            try {
+                username = input.nextLine();
+                invalidUsername.checkUsername(username);
+            }catch (InvalidUsername except){
+                System.out.println(except.getMessage());
+                return;
+            }
             List<Login> loginList = loginService.findAll();
             if(loginList == null)
                 break;
