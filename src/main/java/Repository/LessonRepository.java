@@ -83,7 +83,19 @@ public class LessonRepository implements Repository<Lesson> {
 
     @Override
     public int update(Lesson lesson) throws SQLException {
-        return 0;
+        String setGrade = "UPDATE Lesson SET grade = ? WHERE idStudent = ? AND lessonName = ? AND lastProfessorName = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(setGrade);
+        preparedStatement.setInt(1,lesson.getGrade());
+        preparedStatement.setInt(2,lesson.getIdStudent());
+        preparedStatement.setString(3,lesson.getLessonName());
+        preparedStatement.setString(4,lesson.getLastProfessorName());
+        try{
+            preparedStatement.executeUpdate();
+        }catch (SQLException exception){
+            System.out.println(exception.getMessage());
+            return 0;
+        }
+        return 1;
     }
 
     @Override
