@@ -118,8 +118,14 @@ public class LessonManager {
         String lastName = findLastName(username);
         showLesson(lastName);
         System.out.print("Enter Student id:");
-        int studentId = input.nextInt();
-        input.nextLine();
+        int studentId = -1;
+        try {
+            studentId = input.nextInt();
+            input.nextLine();
+        }catch (Exception exception){
+            System.out.println("You enter a wrong ID");
+            return;
+        }
         if(!checkStudentId(studentId)){
             System.out.println("You enter a wrong student Id!");
             return;
