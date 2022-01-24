@@ -72,4 +72,17 @@ public class Lesson {
     public void setLastProfessorName(String lastProfessorName) {
         this.lastProfessorName = lastProfessorName;
     }
+
+    @Override
+    public String toString() {
+        return "Lesson{" +
+                "idStudent=" + idStudent +
+                ", quarterNumber=" + quarterNumber +
+                ", year=" + year +
+                ", unitNumber=" + unitNumber +
+                ", grade=" + grade +
+                ", lessonName='" + lessonName + '\'' +
+                ", lastProfessorName='" + lastProfessorName + '\'' +
+                '}';
+    }
 }
