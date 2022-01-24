@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class LessonManager {
+    private InvalidGrade invalidGrade = new InvalidGrade();
     private LessonService lessonService = new LessonService();
     private ProfessorService professorService = new ProfessorService();
     private OfferLessonService offerLessonService = new OfferLessonService();
@@ -60,7 +61,7 @@ public class LessonManager {
 
         System.out.print("Enter lastProfessorName:");
         lastProfessorName = input.nextLine();
-        if(!findLastProfessorName(lastProfessorName)){
+        if(!checkLastProfessorName(lastProfessorName)){
             System.out.println("This professor is not exists!");
             return;
         }
@@ -100,7 +101,7 @@ public class LessonManager {
         return 0;
     }
 
-    public boolean findLastProfessorName(String name) throws SQLException {
+    public boolean checkLastProfessorName(String name) throws SQLException {
         List<Professor> professorList = new ArrayList<>();
         professorList = professorService.findAll();
         for (Professor pro:professorList
@@ -108,6 +109,95 @@ public class LessonManager {
             Professor professor = new Professor();
             professor = pro;
             if(pro.getLastName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
+    public void addGrade(String username) throws SQLException {
+        String lastName = findLastName(username);
+        showLesson(lastName);
+        System.out.print("Enter Student id:");
+        int studentId = input.nextInt();
+        input.nextLine();
+        if(!checkStudentId(studentId)){
+            System.out.println("You enter a wrong student Id!");
+            return;
+        }
+        System.out.print("Enter lesson name:");
+        lessonName = input.nextLine();
+        if(!checkLessonName(studentId,lessonName)){
+            System.out.println("This lesson name for this ID is not exsit!");
+            return;
+        }
+        System.out.print("Enter Grade:");
+        int grade;
+        try {
+            grade = input.nextInt();
+            input.nextLine();
+            invalidGrade.invalidGrade(grade);
+        }catch (InvalidGrade invalidGrade){
+            System.out.println(invalidGrade.getMessage());
+            return;
+        }
+        Lesson lesson = new Lesson(studentId,-1,-1,-1,grade,lessonName,lastName);
+        if(lessonService.addGrade(lesson) == 1 )
+            System.out.println("Grade set!");
+    }
+
+
+    public String findLastName(String username) throws SQLException {
+        List<Professor> professorList = new ArrayList<>();
+        professorList = professorService.findAll();
+        for (Professor pro:professorList
+             ) {
+            Professor professor = new Professor();
+            professor = pro;
+            if(pro.getUsername().equals(username))
+                return pro.getLastName();
+        }
+        return null;
+    }
+
+    public void showLesson(String lastName) throws SQLException {
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList = lessonService.findAll();
+        int i = 0;
+        for (Lesson lesson:lessonList
+             ) {
+            Lesson lesson1 = new Lesson();
+            lesson1 = lesson;
+            if(lesson1.getLastProfessorName().equals(lastName) && lesson1.getGrade() == -1 ){
+                i++;
+                System.out.println(lesson1.toString());
+            }
+
+        }
+        if(i == 0)
+            System.out.println("You dont have any lesson without grade!");
+    }
+
+    public boolean checkStudentId(int idStudent) throws SQLException {
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList = lessonService.findAll();
+        for (Lesson lesson:lessonList
+             ) {
+            Lesson lesson1 = new Lesson();
+            lesson1 = lesson;
+            if(lesson1.getIdStudent() == idStudent )
+                return true;
+        }
+        return false;
+    }
+
+    public boolean checkLessonName(int idStudent,String lessonName) throws SQLException {
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList = lessonService.findAll();
+        for (Lesson lesson:lessonList
+             ) {
+            Lesson lesson1 = new Lesson();
+            lesson1 = lesson;
+            if(lesson1.getIdStudent() == idStudent && lesson1.getLessonName().equals(lessonName))
                 return true;
         }
         return false;
