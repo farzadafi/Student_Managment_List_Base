@@ -69,6 +69,23 @@ public class LessonManager {
         System.out.println("This lesson successful added!");
     }
 
+    public void viewLesson(int idStudent) throws SQLException {
+        List<Lesson> lessonList = new ArrayList<>();
+        lessonList = lessonService.findAll();
+        if(lessonList == null){
+            System.out.println("you dont have any lesson yet!");
+            return;
+        }
+        for (Lesson lesson:lessonList
+             ) {
+            Lesson lesson1 = new Lesson();
+            lesson1 = lesson;
+            if(lesson1.getIdStudent() == idStudent)
+                System.out.println(lesson1.toString());
+        }
+
+    }
+
     public int findLessonName(String name) throws SQLException {
         List<OfferLesson> offerLessonList = new ArrayList<>();
         offerLessonList = offerLessonService.findAll();
