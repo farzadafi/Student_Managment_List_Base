@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OfferLessonManager {
+    private InvalidUsername invalidUsername = new InvalidUsername();
     private InvalidUnitNumber invalidUnitNumber = new InvalidUnitNumber();
     private Scanner input = new Scanner(System.in);
     private OfferLessonService offerLessonService = new OfferLessonService();
@@ -22,8 +23,14 @@ public class OfferLessonManager {
 
     public void OfferLesson() throws SQLException {
         while(true) {
-            System.out.print("Enter lesson name:");
-            lessonName = input.nextLine();
+            System.out.print("Enter lesson name(start with alpha):");
+            try {
+                lessonName = input.nextLine();
+                invalidUsername.checkUsername(lessonName);
+            }catch (InvalidUsername except){
+                System.out.println("lesson name can not start with digit!");
+                return;
+            }
             List<OfferLesson> offerLessonList = offerLessonService.findAll();
             if(offerLessonList == null)
                 break;
