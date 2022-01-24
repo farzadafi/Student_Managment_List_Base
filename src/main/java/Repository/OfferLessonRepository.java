@@ -15,7 +15,7 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
     Connection connection = Singleton.getInstance().getConnection();
 
     public OfferLessonRepository() throws SQLException, ClassNotFoundException {
-        String createTable = "CREATE TABLE IF NOT EXISTS OfferLesson(id serial,lessonName varchar(50),unitNumber integer)";
+        String createTable = "CREATE TABLE IF NOT EXISTS OfferLesson(id serial,lessonName varchar(50) UNIQUE,unitNumber integer)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();

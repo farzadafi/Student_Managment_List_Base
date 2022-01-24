@@ -1,9 +1,6 @@
 import Entity.Clerk;
 import Entity.Login;
-import Manager.ClerkManager;
-import Manager.OfferLessonManager;
-import Manager.ProfessorManager;
-import Manager.StudentManager;
+import Manager.*;
 import Service.LoginService;
 import Service.OfferLessonService;
 
@@ -13,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
+    private LessonManager lessonManager = new LessonManager();
     private OfferLessonManager offerLessonManager = new OfferLessonManager();
     private ClerkManager clerkManager = new ClerkManager();
     private ProfessorManager professorManager = new ProfessorManager();
@@ -239,11 +237,10 @@ public class Menu {
         while(finalWhile)
         {
             System.out.println("****** Hi! " + username + " ******");
-            System.out.println("1-view mySelf.");
-            System.out.println("2-view lessonList.");
-            System.out.println("3-Unit select.");
-            System.out.println("4-view lesson and grade's.");
-            System.out.println("5-Exit.");
+            System.out.println("1-view lessonList.");
+            System.out.println("2-Unit select.");
+            System.out.println("3-view lesson and grade's.");
+            System.out.println("4-Exit.");
             System.out.print("Please select a number:");
             try {
                 command = input.nextInt();
@@ -255,6 +252,25 @@ public class Menu {
             input.nextLine();
             switch (command)
             {
+                case 1:
+                    offerLessonManager.showAll();
+                    break;
+
+                case 2:
+                    lessonManager.selectLesson(username,idStudent);
+                    break;
+
+                case 3:
+                    lessonManager.viewLesson(idStudent);
+                    break;
+
+                case 4:
+                    System.out.println("Good luck!");
+                    finalWhile = false;
+                    break;
+
+                default:
+                    System.out.println("You enter a wrong number!");
 
             }//switch
         }//while
