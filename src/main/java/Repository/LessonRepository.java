@@ -16,15 +16,16 @@ public class LessonRepository implements Repository<Lesson> {
                                                                 "idStudent integer," +
                                                                 "lessonName varchar(50) REFERENCES OfferLesson(lessonName), " +
                                                                 "quarterNumber integer, " +
-                                                                "unitNumber integer REFERENCES OfferLesson(unitNumber), " +
+                                                                "unitNumber integer, " +
                                                                 "yearl integer, " +
-                                                                "lastProfessorName varchar(50) REFERENCES Professor(lastName), " +
+                                                                "lastProfessorName varchar(50) , " +
                                                                 "grade integer)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
         }catch (SQLException sql){
             System.out.println(sql.getMessage());
+            System.out.println("farzad");
         }
 
 
