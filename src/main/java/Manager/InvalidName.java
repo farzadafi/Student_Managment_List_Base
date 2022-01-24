@@ -20,5 +20,11 @@ public class InvalidName extends RuntimeException{
             if(Character.isDigit(ch))
                 throw new InvalidName("name can not have number!");
         }
+        for (Character ch:name.toCharArray()
+             ) {
+            if(!Character.isAlphabetic(ch))
+                throw new InvalidName("name can't have Sign(!,@,#,%,...)");
+
+        }
     }
 }
