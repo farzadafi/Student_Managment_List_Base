@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProfessorManager {
+    private InvalidUsername invalidUsername = new InvalidUsername();
+    private InvalidName invalidName = new InvalidName();
     private LessonService lessonService = new LessonService();
     private LessonManager lessonManager = new LessonManager();
     private ProfessorService professorService = new ProfessorService();
@@ -24,10 +26,22 @@ public class ProfessorManager {
     }
 
     public void addProfessor() throws SQLException {
-        System.out.print("Enter first name:");
-        firstName = input.nextLine();
-        System.out.print("Enter last name:");
-        lastName = input.nextLine();
+        System.out.print("Enter first name(just alpha):");
+        try {
+            firstName = input.nextLine();
+            invalidName.checkName(firstName);
+        }catch (InvalidName except){
+            System.out.println(except.getMessage());
+            return;
+        }
+        System.out.print("Enter last name(just alpha):");
+        try {
+            lastName = input.nextLine();
+            invalidName.checkName(lastName);
+        }catch (InvalidName except) {
+            System.out.println(except.getMessage());
+            return;
+        }
         while(true) {
             System.out.print("Enter nationalId:");
             nationalId = input.nextLine();
@@ -39,8 +53,14 @@ public class ProfessorManager {
             }
         }
         while(true) {
-            System.out.print("Enter username:");
-            username = input.nextLine();
+            System.out.print("Enter username(start with alpha):");
+            try {
+                username = input.nextLine();
+                invalidUsername.checkUsername(username);
+            }catch (InvalidUsername except){
+                System.out.println(except.getMessage());
+                return;
+            }
             List<Login> loginList = loginService.findAll();
             if(loginList == null)
                 break;
