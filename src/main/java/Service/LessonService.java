@@ -21,4 +21,8 @@ public class LessonService {
     public List<Lesson> findAll() throws SQLException {
         return lessonRepository.findAll();
     }
+
+    public int addGrade(Lesson lesson) throws SQLException {
+        return lessonRepository.update(lesson);
+    }
 }
