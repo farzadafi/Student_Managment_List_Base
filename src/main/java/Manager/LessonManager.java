@@ -48,6 +48,7 @@ public class LessonManager {
             input.nextLine();
         }catch (Exception exception){
             System.out.println("you can enter just number!");
+            input.nextLine();
             return;
         }
 
@@ -124,6 +125,7 @@ public class LessonManager {
             input.nextLine();
         }catch (Exception exception){
             System.out.println("You enter a wrong ID");
+            input.nextLine();
             return;
         }
         if(!checkStudentId(studentId)){
@@ -137,13 +139,18 @@ public class LessonManager {
             return;
         }
         System.out.print("Enter Grade:");
-        int grade;
+        int grade = 0;
         try {
             grade = input.nextInt();
             input.nextLine();
             invalidGrade.invalidGrade(grade);
         }catch (InvalidGrade invalidGrade){
             System.out.println(invalidGrade.getMessage());
+            input.nextLine();
+            return;
+        }catch (Exception exception){
+            System.out.println("just enter number Professor!are you buy your license?");
+            input.nextLine();
             return;
         }
         Lesson lesson = new Lesson(studentId,-1,-1,-1,grade,lessonName,lastName);
