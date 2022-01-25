@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ClerkManager {
+    private Utility utility = new Utility();
     private InvalidUsername invalidUsername = new InvalidUsername();
     private InvalidName invalidName = new InvalidName();
     private ClerkService clerkService = new ClerkService();
@@ -80,20 +81,7 @@ public class ClerkManager {
             else
                 break;
         }
-        while(true) {
-            System.out.print("Enter your password:");
-            boolean isFalse = true;
-            try {
-                password = input.nextLine();
-                invalidPassword.passwordCheck(password);
-                isFalse = false;
-            } catch (InvalidPassword except) {
-                System.out.println(except.getMessage());
-            }
-            if(!isFalse)
-                break;
-        }
-
+        password = utility.setPassword();
         Clerk clerk = new Clerk(firstName,lastName,nationalId,username,password);
         clerkService.addClerk(clerk);
 
@@ -168,20 +156,7 @@ public class ClerkManager {
             System.out.println(name.getMessage());
             return;
         }
-        while(true) {
-            System.out.print("Enter your password:");
-            boolean isFalse = true;
-            try {
-                password = input.nextLine();
-                invalidPassword.passwordCheck(password);
-                isFalse = false;
-            } catch (InvalidPassword except) {
-                System.out.println(except.getMessage());
-            }
-            if(!isFalse)
-                break;
-        }
-
+        password = utility.setPassword();
         Clerk clerk = new Clerk(firstName,lastName,nationalId,null,password);
         int result = clerkService.updateClerk(clerk);
         if(result == 0 )

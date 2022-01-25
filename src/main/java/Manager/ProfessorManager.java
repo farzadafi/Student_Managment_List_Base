@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProfessorManager {
+    private Utility utility = new Utility();
     private InvalidUsername invalidUsername = new InvalidUsername();
     private InvalidName invalidName = new InvalidName();
     private LessonService lessonService = new LessonService();
@@ -21,6 +22,7 @@ public class ProfessorManager {
     private Scanner input = new Scanner(System.in);
     private String firstName,lastName,username,password,nationalId;
     private Professor professor = new Professor();
+    private InvalidPassword invalidPassword = new InvalidPassword();
 
     public ProfessorManager() throws SQLException, ClassNotFoundException {
     }
@@ -79,8 +81,7 @@ public class ProfessorManager {
             else
                 break;
         }
-        System.out.print("Enter password:");
-        password = input.nextLine();
+        password = utility.setPassword();
         int science = 0;
         System.out.print(firstName + " is a science?(0 or 1):");
         try {
@@ -156,12 +157,23 @@ public class ProfessorManager {
             return;
         }
 
-        System.out.print("Enter new first name:");
-        firstName = input.nextLine();
-        System.out.print("Enter new last name:");
-        lastName = input.nextLine();
-        System.out.print("Enter new password:");
-        password = input.nextLine();
+        System.out.print("Enter first name(just alpha):");
+        try {
+            firstName = input.nextLine();
+            invalidName.checkName(firstName);
+        }catch (InvalidName except){
+            System.out.println(except.getMessage());
+            return;
+        }
+        System.out.print("Enter last name(just alpha):");
+        try {
+            lastName = input.nextLine();
+            invalidName.checkName(lastName);
+        }catch (InvalidName except) {
+            System.out.println(except.getMessage());
+            return;
+        }
+        password = utility.setPassword();
         Professor professor = new Professor(firstName,lastName,nationalId,null,password,null);
         int result = professorService.updateProfessor(professor);
         if(result == 0 )

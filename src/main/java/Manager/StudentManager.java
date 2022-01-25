@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class StudentManager {
+    private Utility utility = new Utility();
     private InvalidName invalidName = new InvalidName();
     private InvalidUsername invalidUsername = new InvalidUsername();
     private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
@@ -19,6 +20,7 @@ public class StudentManager {
     private LoginService loginService = new LoginService();
     private Scanner input = new Scanner(System.in);
     private String firstName,lastName,nationalId,username,password;
+    private InvalidPassword invalidPassword = new InvalidPassword();
 
     public StudentManager() throws SQLException, ClassNotFoundException {
     }
@@ -77,8 +79,8 @@ public class StudentManager {
                 else
                     break;
         }
-        System.out.print("Enter password:");
-        password = input.nextLine();
+        password = utility.setPassword();
+        System.out.println("passwrod is " + password);
         Student student = new Student(firstName,lastName,nationalId,username,password);
         studentService.addStudnet(student);
         Login login = new Login(username,password,TypeUser.STUDENT);
@@ -110,12 +112,23 @@ public class StudentManager {
                     return;
                 }
 
-            System.out.print("Enter new first name:");
-            firstName = input.nextLine();
-            System.out.print("Enter new last name:");
-            lastName = input.nextLine();
-            System.out.print("Enter new password:");
-            password = input.nextLine();
+            System.out.print("Enter first name(just alpha):");
+            try {
+                firstName = input.nextLine();
+                invalidName.checkName(firstName);
+            }catch (InvalidName except){
+                System.out.println(except.getMessage());
+                return;
+            }
+            System.out.print("Enter last name(just alpha):");
+            try {
+                lastName = input.nextLine();
+                invalidName.checkName(lastName);
+            }catch (InvalidName except){
+                System.out.println(except.getMessage());
+                return;
+            }
+            password = utility.setPassword();
             Student student = new Student(firstName,lastName,nationalId,null,password);
             int result = studentService.updateStudent(student);
             if(result == 0 )
