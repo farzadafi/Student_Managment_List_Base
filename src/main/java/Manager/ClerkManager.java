@@ -28,22 +28,8 @@ public class ClerkManager {
 
 
     public void addClerk() throws SQLException {
-        System.out.print("Enter first name(just alpha):");
-        try {
-            firstName = input.nextLine();
-            invalidName.checkName(firstName);
-        }catch (InvalidName name){
-            System.out.println(name.getMessage());
-            return;
-        }
-        System.out.print("Enter last name(just alpha):");
-        try {
-            lastName = input.nextLine();
-            invalidName.checkName(lastName);
-        }catch (InvalidName name){
-            System.out.println(name.getMessage());
-            return;
-        }
+        firstName = utility.setFirstName();
+        lastName = utility.setLastName();
         while(true) {
             System.out.print("Enter nationalId(just digit):");
             nationalId = input.nextLine();
@@ -54,33 +40,7 @@ public class ClerkManager {
                 System.out.println("You enter a wrong nationalId!");
             }
         }
-        while(true) {
-            System.out.print("Enter username(start with alpha):");
-            try {
-                username = input.nextLine();
-                invalidUsername.checkUsername(username);
-            }catch (InvalidUsername except){
-                System.out.println(except.getMessage());
-                return;
-            }
-            List<Login> loginList = loginService.findAll();
-            if(loginList == null)
-                break;
-            int i = 0;
-            for (Login login:loginList)
-            {
-                Login login1 = new Login();
-                login1 = login;
-                if(login.getUsername().equals(username)){
-                    i = 1;
-                    break;
-                }
-            }
-            if(i == 1)
-                System.out.println("This username is defined before!");
-            else
-                break;
-        }
+        username = utility.setUsername();
         password = utility.setPassword();
         Clerk clerk = new Clerk(firstName,lastName,nationalId,username,password);
         clerkService.addClerk(clerk);
@@ -140,22 +100,8 @@ public class ClerkManager {
             return;
         }
 
-        System.out.print("Enter first name(just alpha):");
-        try {
-            firstName = input.nextLine();
-            invalidName.checkName(firstName);
-        }catch (InvalidName name){
-            System.out.println(name.getMessage());
-            return;
-        }
-        System.out.print("Enter last name(just alpha):");
-        try {
-            lastName = input.nextLine();
-            invalidName.checkName(lastName);
-        }catch (InvalidName name){
-            System.out.println(name.getMessage());
-            return;
-        }
+        firstName = utility.setFirstName();
+        lastName = utility.setLastName();
         password = utility.setPassword();
         Clerk clerk = new Clerk(firstName,lastName,nationalId,null,password);
         int result = clerkService.updateClerk(clerk);
