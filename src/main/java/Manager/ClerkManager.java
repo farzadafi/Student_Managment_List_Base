@@ -30,16 +30,7 @@ public class ClerkManager {
     public void addClerk() throws SQLException {
         firstName = utility.setFirstName();
         lastName = utility.setLastName();
-        while(true) {
-            System.out.print("Enter nationalId(just digit):");
-            nationalId = input.nextLine();
-            try {
-                invalidNationalIdException.nationalIdChecker(nationalId);
-                break;
-            }catch (InvalidNationalIdException exception){
-                System.out.println("You enter a wrong nationalId!");
-            }
-        }
+        nationalId = utility.setNationalId();
         username = utility.setUsername();
         password = utility.setPassword();
         Clerk clerk = new Clerk(firstName,lastName,nationalId,username,password);
