@@ -28,16 +28,7 @@ public class StudentManager {
     public void addStudent() throws SQLException {
         firstName = utility.setFirstName();
         lastName = utility.setLastName();
-        while(true) {
-            System.out.print("Enter nationalId:");
-            nationalId = input.nextLine();
-            try {
-                invalidNationalIdException.nationalIdChecker(nationalId);
-                break;
-            }catch (InvalidNationalIdException exception){
-                System.out.println("You enter a wrong nationalId!");
-            }
-        }
+        nationalId = utility.setNationalId();
         username = utility.setUsername();
         password = utility.setPassword();
         Student student = new Student(firstName,lastName,nationalId,username,password);
