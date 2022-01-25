@@ -56,6 +56,7 @@ public class OfferLessonManager {
                 input.nextLine();
             }catch (InputMismatchException exception){
                 System.out.println("You have just enter a number!");
+                input.nextLine();
                 return;
             }
             try {
