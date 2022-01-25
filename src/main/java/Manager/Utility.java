@@ -10,10 +10,11 @@ import java.util.Scanner;
 public class Utility {
     private Scanner input = new Scanner(System.in);
     private InvalidPassword invalidPassword = new InvalidPassword();
-    private String password,firstName,username;
+    private String password,firstName,username,nationalId;
     private InvalidName invalidName = new InvalidName();
     private InvalidUsername invalidUsername = new InvalidUsername();
     private LoginService loginService = new LoginService();
+    private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
 
     public Utility() throws SQLException, ClassNotFoundException {
     }
@@ -91,5 +92,19 @@ public class Utility {
                 break;
         }
         return username;
+    }
+
+    public String setNationalId(){
+        while(true) {
+            System.out.print("Enter nationalId:");
+            nationalId = input.nextLine();
+            try {
+                invalidNationalIdException.nationalIdChecker(nationalId);
+                break;
+            }catch (InvalidNationalIdException exception){
+                System.out.println("You enter a wrong nationalId!");
+            }
+        }
+        return nationalId;
     }
 }
