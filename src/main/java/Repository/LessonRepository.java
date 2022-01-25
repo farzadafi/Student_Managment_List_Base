@@ -27,7 +27,6 @@ public class LessonRepository implements Repository<Lesson> {
             preparedStatement.execute();
         }catch (SQLException sql){
             System.out.println(sql.getMessage());
-            System.out.println("farzad");
         }
 
 

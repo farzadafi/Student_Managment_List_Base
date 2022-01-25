@@ -14,9 +14,9 @@ import java.util.Scanner;
 
 public class LessonManager {
     private InvalidGrade invalidGrade = new InvalidGrade();
-    private LessonService lessonService = new LessonService();
     private ProfessorService professorService = new ProfessorService();
     private OfferLessonService offerLessonService = new OfferLessonService();
+    private LessonService lessonService = new LessonService();
     private InvalidQuarterNumber invalidQuarterNumber = new InvalidQuarterNumber();
     private Scanner input = new Scanner(System.in);
     private int quarterNumber,year,unitNumber;

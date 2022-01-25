@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private LessonManager lessonManager = new LessonManager();
-    private OfferLessonManager offerLessonManager = new OfferLessonManager();
+    private OfferLessonService offerLessonService = new OfferLessonService();
     private ClerkManager clerkManager = new ClerkManager();
-    private ProfessorManager professorManager = new ProfessorManager();
     private StudentManager studentManager = new StudentManager();
+    private ProfessorManager professorManager = new ProfessorManager();
+    private OfferLessonManager offerLessonManager = new OfferLessonManager();
+    private LessonManager lessonManager = new LessonManager();
     private Scanner input = new Scanner(System.in);
     private int command;
     private String userName,password;
