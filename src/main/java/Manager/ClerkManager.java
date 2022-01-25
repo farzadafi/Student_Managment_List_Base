@@ -20,6 +20,7 @@ public class ClerkManager {
     private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
     private String firstName,lastName,nationalId,username,password;
     private Scanner input = new Scanner(System.in);
+    private InvalidPassword invalidPassword = new InvalidPassword();
 
     public ClerkManager() throws SQLException, ClassNotFoundException {
     }
@@ -79,8 +80,20 @@ public class ClerkManager {
             else
                 break;
         }
-        System.out.print("Enter password:");
-        password = input.nextLine();
+        while(true) {
+            System.out.print("Enter your password:");
+            boolean isFalse = true;
+            try {
+                password = input.nextLine();
+                invalidPassword.passwordCheck(password);
+                isFalse = false;
+            } catch (InvalidPassword except) {
+                System.out.println(except.getMessage());
+            }
+            if(!isFalse)
+                break;
+        }
+
         Clerk clerk = new Clerk(firstName,lastName,nationalId,username,password);
         clerkService.addClerk(clerk);
 
@@ -139,12 +152,36 @@ public class ClerkManager {
             return;
         }
 
-        System.out.print("Enter new first name:");
-        firstName = input.nextLine();
-        System.out.print("Enter new last name:");
-        lastName = input.nextLine();
-        System.out.print("Enter new password:");
-        password = input.nextLine();
+        System.out.print("Enter first name(just alpha):");
+        try {
+            firstName = input.nextLine();
+            invalidName.checkName(firstName);
+        }catch (InvalidName name){
+            System.out.println(name.getMessage());
+            return;
+        }
+        System.out.print("Enter last name(just alpha):");
+        try {
+            lastName = input.nextLine();
+            invalidName.checkName(lastName);
+        }catch (InvalidName name){
+            System.out.println(name.getMessage());
+            return;
+        }
+        while(true) {
+            System.out.print("Enter your password:");
+            boolean isFalse = true;
+            try {
+                password = input.nextLine();
+                invalidPassword.passwordCheck(password);
+                isFalse = false;
+            } catch (InvalidPassword except) {
+                System.out.println(except.getMessage());
+            }
+            if(!isFalse)
+                break;
+        }
+
         Clerk clerk = new Clerk(firstName,lastName,nationalId,null,password);
         int result = clerkService.updateClerk(clerk);
         if(result == 0 )
