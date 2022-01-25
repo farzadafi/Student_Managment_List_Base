@@ -30,16 +30,7 @@ public class ProfessorManager {
     public void addProfessor() throws SQLException {
         firstName = utility.setFirstName();
         lastName = utility.setLastName();
-        while(true) {
-            System.out.print("Enter nationalId:");
-            nationalId = input.nextLine();
-            try {
-                invalidNationalIdException.nationalIdChecker(nationalId);
-                break;
-            }catch (InvalidNationalIdException exception){
-                System.out.println("You enter a wrong nationalId!");
-            }
-        }
+        nationalId = utility.setNationalId();
         username = utility.setUsername();
         password = utility.setPassword();
         int science = 0;
