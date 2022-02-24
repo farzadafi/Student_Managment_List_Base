@@ -38,7 +38,7 @@ public class LessonManager {
             return;
         }
         try {
-            invalidQuarterNumber.invalidQuarterNumber(quarterNumber);
+            invalidQuarterNumber(quarterNumber);
         }catch (InvalidQuarterNumber exception){
             System.out.println(exception.getMessage());
             return;
@@ -145,7 +145,7 @@ public class LessonManager {
         try {
             grade = input.nextInt();
             input.nextLine();
-            invalidGrade.invalidGrade(grade);
+            invalidGrade(grade);
         }catch (InvalidGrade invalidGrade){
             System.out.println(invalidGrade.getMessage());
             input.nextLine();
@@ -217,4 +217,17 @@ public class LessonManager {
         }
         return false;
     }
+
+    public void invalidGrade(int grade){
+        if(grade > 20 || grade < 0 )
+            throw new InvalidGrade("You enter a wrong grade");
+    }
+
+    public void invalidQuarterNumber(int quarterNumber) {
+        if (quarterNumber > 10 || quarterNumber < 1) {
+            throw new InvalidQuarterNumber("You enter a wrong quarter number!");
+        }
+    }
+
+
 }

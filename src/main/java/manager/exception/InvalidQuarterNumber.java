@@ -12,9 +12,5 @@ public class InvalidQuarterNumber extends RuntimeException {
         super(message, cause);
     }
 
-    public void invalidQuarterNumber(int quarterNumber){
-        if(quarterNumber > 10 || quarterNumber < 1 ){
-            throw new InvalidQuarterNumber("You enter a wrong quarter number!");
-        }
-    }
+
 }

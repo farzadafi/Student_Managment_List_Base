@@ -26,7 +26,7 @@ public class OfferLessonManager {
             System.out.print("Enter lesson name(start with alpha):");
             try {
                 lessonName = input.nextLine();
-                invalidUsername.checkUsername(lessonName);
+                checkUsername(lessonName);
             }catch (InvalidUsername except){
                 System.out.println("lesson name can not start with digit!");
                 return;
@@ -60,7 +60,7 @@ public class OfferLessonManager {
                 return;
             }
             try {
-                invalidUnitNumber.unitNumberChecker(unitNumber);
+                unitNumberChecker(unitNumber);
                 break;
             }catch (InvalidUnitNumber exception){
                 System.out.println("You enter a wrong unitNumber!");
@@ -81,6 +81,18 @@ public class OfferLessonManager {
         for (OfferLesson offer:offerLessonList) {
             System.out.println(offer.toString());
         }
+    }
 
+    public void unitNumberChecker(int unitNumber){
+        if(unitNumber > 4 || unitNumber < 1 )
+            throw new InvalidUnitNumber("You enter a wrong unit number!");
+    }
+
+    public void checkUsername(String username){
+        if(username.length() < 3 )
+            throw new InvalidUsername("Username should be more than 2!");
+        char ch = username.charAt(0);
+        if(Character.isDigit(ch))
+            throw new InvalidUsername("Username can not start with digit!");
     }
 }

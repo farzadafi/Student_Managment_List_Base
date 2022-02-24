@@ -12,14 +12,5 @@ public class InvalidNationalIdException extends RuntimeException {
         super(message, cause);
     }
 
-    public void nationalIdChecker(String nationalId){
-        if(nationalId.length() > 10 )
-            throw new InvalidNationalIdException();
-        if(nationalId.equals(""))
-            throw new InvalidNationalIdException();
-        for (Character ch:nationalId.toCharArray()) {
-            if(!Character.isDigit(ch))
-                throw new InvalidNationalIdException();
-        }
-    }
+
 }

@@ -12,8 +12,5 @@ public class InvalidGrade extends RuntimeException {
         super(message, cause);
     }
 
-    public void invalidGrade(int grade){
-        if(grade > 20 || grade < 0 )
-            throw new InvalidGrade("You enter a wrong grade");
-    }
+
 }

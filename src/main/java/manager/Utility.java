@@ -1,10 +1,7 @@
 package manager;
 
 import entity.Login;
-import manager.exception.InvalidName;
-import manager.exception.InvalidNationalIdException;
-import manager.exception.InvalidPassword;
-import manager.exception.InvalidUsername;
+import manager.exception.*;
 import service.LoginService;
 
 import java.sql.SQLException;
@@ -13,12 +10,8 @@ import java.util.Scanner;
 
 public class Utility {
     private Scanner input = new Scanner(System.in);
-    private InvalidPassword invalidPassword = new InvalidPassword();
     private String password,firstName,username,nationalId;
-    private InvalidName invalidName = new InvalidName();
-    private InvalidUsername invalidUsername = new InvalidUsername();
     private LoginService loginService = new LoginService();
-    private InvalidNationalIdException invalidNationalIdException = new InvalidNationalIdException();
 
     public Utility() throws SQLException, ClassNotFoundException {
     }
@@ -28,7 +21,7 @@ public class Utility {
             System.out.print("Enter your password:");
             try {
                 password = input.nextLine();
-                invalidPassword.passwordCheck(password);
+                passwordCheck(password);
                 break;
             } catch (InvalidPassword except) {
                 System.out.println(except.getMessage());
@@ -42,7 +35,7 @@ public class Utility {
             System.out.print("Enter first name(just alpha):");
             try {
                 firstName = input.nextLine();
-                invalidName.checkName(firstName);
+                checkName(firstName);
                 break;
             }catch (InvalidName except){
                 System.out.println(except.getMessage());
@@ -56,7 +49,7 @@ public class Utility {
             System.out.print("Enter last name(just alpha):");
             try {
                 firstName = input.nextLine();
-                invalidName.checkName(firstName);
+                checkName(firstName);
                 break;
             }catch (InvalidName except){
                 System.out.println(except.getMessage());
@@ -71,7 +64,7 @@ public class Utility {
                 System.out.print("Enter username(start with alpha):");
                 try {
                     username = input.nextLine();
-                    invalidUsername.checkUsername(username);
+                    checkUsername(username);
                     break;
                 } catch (InvalidUsername except) {
                     System.out.println(except.getMessage());
@@ -103,7 +96,7 @@ public class Utility {
             System.out.print("Enter nationalId:");
             nationalId = input.nextLine();
             try {
-                invalidNationalIdException.nationalIdChecker(nationalId);
+                nationalIdChecker(nationalId);
                 break;
             }catch (InvalidNationalIdException exception){
                 System.out.println("You enter a wrong nationalId!");
@@ -111,4 +104,67 @@ public class Utility {
         }
         return nationalId;
     }
+
+    public void checkName(String name){
+        if(name.length() < 3 )
+            throw new InvalidName("name should be more than 2 character!");
+        for (Character ch:name.toCharArray()
+        ) {
+            if(Character.isDigit(ch))
+                throw new InvalidName("name can not have number!");
+        }
+        for (Character ch:name.toCharArray()
+        ) {
+            if(!Character.isAlphabetic(ch))
+                throw new InvalidName("name can't have Sign(!,@,#,%,...)");
+
+        }
+    }
+
+
+    public void nationalIdChecker(String nationalId){
+        if(nationalId.length() > 10 )
+            throw new InvalidNationalIdException();
+        if(nationalId.equals(""))
+            throw new InvalidNationalIdException();
+        for (Character ch:nationalId.toCharArray()) {
+            if(!Character.isDigit(ch))
+                throw new InvalidNationalIdException();
+        }
+    }
+
+    public void passwordCheck(String password){
+        if(password.length() < 3 )
+            throw new InvalidPassword("password should be more than 2 ");
+        char[] passwordArray = password.toCharArray();
+        char[] signArray =  new char[] {'!','@','#','$','%','^','&','*','(',')','-','+','=','.',',','>','<','?','/','|',':',';'};
+        int space = 0,lowerCase = 0,upperCase = 0,sign = 0,digit = 0;
+        for(int i=0;i<passwordArray.length;i++)
+            if(Character.isSpaceChar(passwordArray[i]))
+                ++space;
+        for(int i = 0;i<passwordArray.length;i++)
+            if(Character.isUpperCase(passwordArray[i]))
+                ++upperCase;
+        for(int i = 0;i<passwordArray.length;i++)
+            if(Character.isLowerCase(passwordArray[i]))
+                ++lowerCase;
+        for(int i = 0;i<passwordArray.length;i++)
+            if(Character.isDigit(passwordArray[i]))
+                ++digit;
+        for(int i=0;i<signArray.length;i++)
+            for(int j=0;j<passwordArray.length;j++)
+                if(signArray[i] == passwordArray[j])
+                    ++sign;
+        if( (space == 0) || (lowerCase == 0) || (upperCase == 0) || (sign == 0) || (digit == 0) )
+            throw new InvalidPassword("password should have space+lowerCase+upperCase+sign+digit!");
+    }
+
+    public void checkUsername(String username){
+        if(username.length() < 3 )
+            throw new InvalidUsername("Username should be more than 2!");
+        char ch = username.charAt(0);
+        if(Character.isDigit(ch))
+            throw new InvalidUsername("Username can not start with digit!");
+    }
+
 }
