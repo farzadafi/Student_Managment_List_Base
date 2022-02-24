@@ -1,6 +1,8 @@
 package Manager;
 
 import Entity.*;
+import Entity.enomeration.ProfessorType;
+import Entity.enomeration.TypeUser;
 import Service.LessonService;
 import Service.LoginService;
 import Service.ProfessorService;
@@ -43,7 +45,7 @@ public class ProfessorManager {
         }
         Professor professor;
         if(science == 0 ) {
-            professor = new Professor(firstName,lastName,nationalId,username,password,ProfessorType.NORMAL);
+            professor = new Professor(firstName,lastName,nationalId,username,password, ProfessorType.NORMAL);
         }
         else if(science == 1){
             professor = new Professor(firstName,lastName,nationalId,username,password,ProfessorType.SCIENCE);

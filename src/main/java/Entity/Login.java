@@ -1,5 +1,7 @@
 package Entity;
 
+import Entity.enomeration.TypeUser;
+
 public class Login {
     String username,password;
     TypeUser typeUser;

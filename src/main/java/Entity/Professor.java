@@ -1,5 +1,7 @@
 package Entity;
 
+import Entity.enomeration.ProfessorType;
+
 public class Professor extends Person {
     ProfessorType professorType;
 

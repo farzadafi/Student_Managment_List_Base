@@ -2,7 +2,7 @@ package Manager;
 
 import Entity.Login;
 import Entity.Student;
-import Entity.TypeUser;
+import Entity.enomeration.TypeUser;
 import Service.LoginService;
 import Service.StudentService;
 

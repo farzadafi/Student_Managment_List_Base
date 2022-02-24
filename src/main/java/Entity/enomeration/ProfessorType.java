@@ -1,4 +1,4 @@
-package Entity;
+package Entity.enomeration;
 
 public enum ProfessorType {
     NORMAL,

@@ -1,8 +1,7 @@
 package Repository;
 
 import Entity.Professor;
-import Entity.ProfessorType;
-import Entity.Student;
+import Entity.enomeration.ProfessorType;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

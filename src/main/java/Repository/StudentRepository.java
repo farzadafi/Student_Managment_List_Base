@@ -1,8 +1,6 @@
 package Repository;
 
-import Entity.Login;
 import Entity.Student;
-import Entity.TypeUser;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
