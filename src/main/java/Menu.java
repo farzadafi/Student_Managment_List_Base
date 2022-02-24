@@ -1,8 +1,8 @@
-import Entity.Clerk;
-import Entity.Login;
-import Manager.*;
-import Service.LoginService;
-import Service.OfferLessonService;
+import entity.Clerk;
+import entity.Login;
+import manager.*;
+import service.LoginService;
+import service.OfferLessonService;
 
 import java.sql.SQLException;
 import java.util.InputMismatchException;
