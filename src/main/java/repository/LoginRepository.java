@@ -11,15 +11,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginRepository implements Repository<Login> {
-    Connection connection = Singleton.getInstance().getConnection();
+    private Connection connection;
 
-    public LoginRepository() throws SQLException, ClassNotFoundException {
-        String createTable = "CREATE TABLE IF NOT EXISTS Login(username varchar(50) UNIQUE,password varchar(50),kind varchar(10))";
+    public LoginRepository() {
         try {
+            connection = Singleton.getInstance().getConnection();
+        String createTable = "CREATE TABLE IF NOT EXISTS Login(username varchar(50) UNIQUE,password varchar(50),kind varchar(10))";
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -31,12 +34,7 @@ public class LoginRepository implements Repository<Login> {
         preparedStatement.setString(1,login.getUsername());
         preparedStatement.setString(2,login.getPassword());
         preparedStatement.setString(3,String.valueOf(login.getTypeUser()));
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 
     @Override
@@ -45,12 +43,7 @@ public class LoginRepository implements Repository<Login> {
         PreparedStatement preparedStatement = connection.prepareStatement(find);
         List<Login> loginList = new ArrayList<>();
         ResultSet resultSet;
-        try{
-            resultSet = preparedStatement.executeQuery();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return null;
-        }
+        resultSet = preparedStatement.executeQuery();
         if(resultSet.isBeforeFirst()){
             while(resultSet.next()) {
                 Login login = new Login();
@@ -75,15 +68,7 @@ public class LoginRepository implements Repository<Login> {
         String delete = " DELETE FROM Login WHERE username = ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(delete);
         preparedStatement.setString(1,username);
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
-
-
-
 
 }

@@ -10,20 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClerkRepository implements Repository<Clerk> {
-    Connection connection = Singleton.getInstance().getConnection();
+    private Connection connection;
 
-    public ClerkRepository() throws SQLException, ClassNotFoundException {
-        String createTable = " CREATE TABLE IF NOT EXISTS Clerk(id serial," +
-                                                        "firstName varchar(50)," +
-                                                        "lastName varchar(50), " +
-                                                        "nationalId varchar(50), " +
-                                                        "username varchar(50), " +
-                                                        "password varchar(50))";
+    public ClerkRepository() {
         try {
+            connection = Singleton.getInstance().getConnection();
+            String createTable = " CREATE TABLE IF NOT EXISTS Clerk(id serial," +
+                    "firstName varchar(50)," +
+                    "lastName varchar(50), " +
+                    "nationalId varchar(50), " +
+                    "username varchar(50), " +
+                    "password varchar(50))";
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -37,12 +40,7 @@ public class ClerkRepository implements Repository<Clerk> {
         preparedStatement.setString(3, clerk.getNationalId());
         preparedStatement.setString(4, clerk.getUsername());
         preparedStatement.setString(5, clerk.getPassword());
-        try {
             return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
     }
 
 
@@ -52,12 +50,7 @@ public class ClerkRepository implements Repository<Clerk> {
         PreparedStatement preparedStatement = connection.prepareStatement(find);
         List<Clerk> clerkList = new ArrayList<>();
         ResultSet resultSet;
-        try{
             resultSet = preparedStatement.executeQuery();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return null;
-        }
         if(resultSet.isBeforeFirst()){
             while(resultSet.next()) {
                 Clerk clerk = new Clerk();
@@ -82,12 +75,7 @@ public class ClerkRepository implements Repository<Clerk> {
         preparedStatement.setString(2,clerk.getLastName());
         preparedStatement.setString(3,clerk.getPassword());
         preparedStatement.setString(4,clerk.getNationalId());
-        try{
-            preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return 0;
-        }
+        preparedStatement.executeUpdate();
         return 1;
     }
 
@@ -96,11 +84,6 @@ public class ClerkRepository implements Repository<Clerk> {
         String delete = " DELETE FROM Clerk WHERE username = ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(delete);
         preparedStatement.setString(1,username);
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 }

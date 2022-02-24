@@ -7,18 +7,32 @@ import java.util.List;
 public class LoginService {
     private LoginRepository loginRepository = new LoginRepository();
 
-    public LoginService() throws SQLException, ClassNotFoundException {
+    public LoginService() {
     }
 
-    public List<Login> findAll() throws SQLException {
-        return loginRepository.findAll();
+    public List<Login> findAll() {
+        try {
+            return loginRepository.findAll();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
-    public void addLogin(Login login) throws SQLException {
-        loginRepository.add(login);
+    public void addLogin(Login login) {
+        try {
+            loginRepository.add(login);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-    public int delete(String username) throws SQLException {
-        return loginRepository.delete(username);
+    public int delete(String username) {
+        try {
+            return loginRepository.delete(username);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            return 0;
+        }
     }
 }

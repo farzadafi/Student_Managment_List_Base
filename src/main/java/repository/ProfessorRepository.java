@@ -11,21 +11,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProfessorRepository implements Repository<Professor> {
-    Connection connection = Singleton.getInstance().getConnection();
+    private Connection connection;
 
-    public ProfessorRepository() throws SQLException, ClassNotFoundException {
-        String createTable = " CREATE TABLE IF NOT EXISTS Professor(id serial," +
+    public ProfessorRepository() {
+        try {
+            connection = Singleton.getInstance().getConnection();
+            String createTable = " CREATE TABLE IF NOT EXISTS Professor(id serial," +
                                                                "firstName varchar(50)," +
                                                                "lastName varchar(50), " +
                                                                "nationalId varchar(50), " +
                                                                "username varchar(50), " +
                                                                "password varchar(50), " +
                                                                "kindProfessor varchar(50))";
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -40,12 +43,7 @@ public class ProfessorRepository implements Repository<Professor> {
         preparedStatement.setString(4,professor.getUsername());
         preparedStatement.setString(5,professor.getPassword());
         preparedStatement.setString(6, String.valueOf(professor.getProfessorType()));
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 
     @Override
@@ -54,12 +52,7 @@ public class ProfessorRepository implements Repository<Professor> {
         PreparedStatement preparedStatement = connection.prepareStatement(find);
         List<Professor> professorList = new ArrayList<>();
         ResultSet resultSet;
-        try{
-            resultSet = preparedStatement.executeQuery();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return null;
-        }
+        resultSet = preparedStatement.executeQuery();
         if(resultSet.isBeforeFirst()){
             while(resultSet.next()) {
                 Professor professor = new Professor();
@@ -85,13 +78,7 @@ public class ProfessorRepository implements Repository<Professor> {
         preparedStatement.setString(2,professor.getLastName());
         preparedStatement.setString(3,professor.getPassword());
         preparedStatement.setString(4,professor.getNationalId());
-        try{
-            preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return 0;
-        }
-        return 1;
+        return preparedStatement.executeUpdate();
     }
 
     @Override
@@ -99,11 +86,6 @@ public class ProfessorRepository implements Repository<Professor> {
         String delete = " DELETE FROM Professor WHERE username = ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(delete);
         preparedStatement.setString(1,username);
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 }

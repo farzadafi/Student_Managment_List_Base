@@ -9,15 +9,24 @@ import java.util.List;
 public class OfferLessonService {
     private OfferLessonRepository offerLessonRepository = new OfferLessonRepository();
 
-    public OfferLessonService() throws SQLException, ClassNotFoundException {
+    public OfferLessonService() {
     }
 
-    public List<OfferLesson> findAll() throws SQLException {
-        return offerLessonRepository.findAll();
+    public List<OfferLesson> findAll() {
+        try {
+            return offerLessonRepository.findAll();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+            return null;
+        }
     }
 
-    public void addOfferLesson(OfferLesson offerLesson) throws SQLException {
-        offerLessonRepository.add(offerLesson);
+    public void addOfferLesson(OfferLesson offerLesson) {
+        try {
+            offerLessonRepository.add(offerLesson);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
 

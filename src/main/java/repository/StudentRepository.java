@@ -10,20 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StudentRepository implements Repository<Student> {
-    Connection connection = Singleton.getInstance().getConnection();
+    private Connection connection;
 
-    public StudentRepository() throws SQLException, ClassNotFoundException {
-        String createTable = " CREATE TABLE IF NOT EXISTS Student(id serial," +
+    public StudentRepository() {
+        try {
+            connection = Singleton.getInstance().getConnection();
+            String createTable = " CREATE TABLE IF NOT EXISTS Student(id serial," +
                                                                "firstName varchar(50)," +
                                                                "lastName varchar(50), " +
                                                                "nationalId varchar(50), " +
                                                                "username varchar(50), " +
                                                                "password varchar(50))";
-        try {
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -37,12 +40,7 @@ public class StudentRepository implements Repository<Student> {
         preparedStatement.setString(3, student.getNationalId());
         preparedStatement.setString(4, student.getUsername());
         preparedStatement.setString(5, student.getPassword());
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 
     @Override
@@ -51,12 +49,7 @@ public class StudentRepository implements Repository<Student> {
         PreparedStatement preparedStatement = connection.prepareStatement(find);
         List<Student> studentList = new ArrayList<>();
         ResultSet resultSet;
-        try{
-            resultSet = preparedStatement.executeQuery();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return null;
-        }
+        resultSet = preparedStatement.executeQuery();
         if(resultSet.isBeforeFirst()){
             while(resultSet.next()) {
                 Student student = new Student();
@@ -81,13 +74,7 @@ public class StudentRepository implements Repository<Student> {
         preparedStatement.setString(2,student.getLastName());
         preparedStatement.setString(3,student.getPassword());
         preparedStatement.setString(4,student.getNationalId());
-        try{
-            preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return 0;
-        }
-        return 1;
+        return preparedStatement.executeUpdate();
     }
 
     @Override
@@ -95,12 +82,7 @@ public class StudentRepository implements Repository<Student> {
         String delete = " DELETE FROM Student WHERE username = ? ";
         PreparedStatement preparedStatement = connection.prepareStatement(delete);
         preparedStatement.setString(1,username);
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 
     public int returnId(String username) throws SQLException {
@@ -108,17 +90,11 @@ public class StudentRepository implements Repository<Student> {
         PreparedStatement preparedStatement = connection.prepareStatement(id);
         preparedStatement.setString(1,username);
         ResultSet resultSet;
-        try {
-            resultSet = preparedStatement.executeQuery();
-        }catch (SQLException exception){
-            System.out.println(exception.getMessage());
-            return 0;
-        }
+        resultSet = preparedStatement.executeQuery();
         if(resultSet.next()){
             return resultSet.getInt("id");
         }
         else
             return 0;
-
     }
 }

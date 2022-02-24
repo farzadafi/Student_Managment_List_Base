@@ -12,19 +12,38 @@ public class ClerkService {
     public ClerkService() throws SQLException, ClassNotFoundException {
     }
 
-    public void addClerk(Clerk clerk) throws SQLException {
-        clerkRepository.add(clerk);
+    public void addClerk(Clerk clerk){
+        try {
+            clerkRepository.add(clerk);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
     }
 
-    public int delete(String username) throws SQLException {
-        return clerkRepository.delete(username);
+    public int delete(String username){
+        try {
+            return clerkRepository.delete(username);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 
-    public List<Clerk> findAll() throws SQLException {
-        return clerkRepository.findAll();
+    public List<Clerk> findAll() {
+        try {
+            return clerkRepository.findAll();
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
-    public int updateClerk(Clerk clerk) throws SQLException {
-        return clerkRepository.update(clerk);
+    public int updateClerk(Clerk clerk) {
+        try {
+            return clerkRepository.update(clerk);
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return 0;
     }
 }

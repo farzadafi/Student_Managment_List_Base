@@ -10,15 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfferLessonRepository implements Repository<OfferLesson> {
-    Connection connection = Singleton.getInstance().getConnection();
+    private Connection connection;
 
-    public OfferLessonRepository() throws SQLException, ClassNotFoundException {
-        String createTable = "CREATE TABLE IF NOT EXISTS OfferLesson(id serial,lessonName varchar(50) UNIQUE,unitNumber integer)";
+    public OfferLessonRepository() {
         try {
+            connection = Singleton.getInstance().getConnection();
+            String createTable = "CREATE TABLE IF NOT EXISTS OfferLesson(id serial,lessonName varchar(50) UNIQUE,unitNumber integer)";
             PreparedStatement preparedStatement = connection.prepareStatement(createTable);
             preparedStatement.execute();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }catch (ClassNotFoundException e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -29,12 +32,7 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
         PreparedStatement preparedStatement = connection.prepareStatement(add);
         preparedStatement.setString(1,offerLesson.getLessonName());
         preparedStatement.setInt(2,offerLesson.getUnitNumber());
-        try {
-            return preparedStatement.executeUpdate();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-        }
-        return 0;
+        return preparedStatement.executeUpdate();
     }
 
     @Override
@@ -43,12 +41,7 @@ public class OfferLessonRepository implements Repository<OfferLesson> {
         PreparedStatement preparedStatement = connection.prepareStatement(find);
         List<OfferLesson> offerLessonList = new ArrayList<>();
         ResultSet resultSet;
-        try{
-            resultSet = preparedStatement.executeQuery();
-        }catch (SQLException sql){
-            System.out.println(sql.getMessage());
-            return null;
-        }
+        resultSet = preparedStatement.executeQuery();
         if(resultSet.isBeforeFirst()){
             while(resultSet.next()) {
                 OfferLesson offerLesson = new OfferLesson();
