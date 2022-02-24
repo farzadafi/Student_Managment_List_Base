@@ -3,6 +3,10 @@ package manager;
 import entity.Clerk;
 import entity.Login;
 import entity.enomeration.TypeUser;
+import manager.exception.InvalidName;
+import manager.exception.InvalidNationalIdException;
+import manager.exception.InvalidPassword;
+import manager.exception.InvalidUsername;
 import service.ClerkService;
 import service.LoginService;
 

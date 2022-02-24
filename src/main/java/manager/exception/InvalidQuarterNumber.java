@@ -1,4 +1,4 @@
-package manager;
+package manager.exception;
 
 public class InvalidQuarterNumber extends RuntimeException {
     public InvalidQuarterNumber() {

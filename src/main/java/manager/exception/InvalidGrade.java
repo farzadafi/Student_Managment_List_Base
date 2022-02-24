@@ -1,4 +1,4 @@
-package manager;
+package manager.exception;
 
 public class InvalidGrade extends RuntimeException {
     public InvalidGrade() {

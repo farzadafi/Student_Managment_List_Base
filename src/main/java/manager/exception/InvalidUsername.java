@@ -1,4 +1,4 @@
-package manager;
+package manager.exception;
 
 public class InvalidUsername extends RuntimeException{
     public InvalidUsername() {

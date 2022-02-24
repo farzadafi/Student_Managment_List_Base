@@ -3,6 +3,8 @@ package manager;
 import entity.Lesson;
 import entity.OfferLesson;
 import entity.Professor;
+import manager.exception.InvalidGrade;
+import manager.exception.InvalidQuarterNumber;
 import service.LessonService;
 import service.OfferLessonService;
 import service.ProfessorService;

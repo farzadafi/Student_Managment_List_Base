@@ -1,6 +1,8 @@
 package manager;
 
 import entity.OfferLesson;
+import manager.exception.InvalidUnitNumber;
+import manager.exception.InvalidUsername;
 import service.OfferLessonService;
 
 import java.sql.SQLException;

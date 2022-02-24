@@ -1,6 +1,10 @@
 package manager;
 
 import entity.Login;
+import manager.exception.InvalidName;
+import manager.exception.InvalidNationalIdException;
+import manager.exception.InvalidPassword;
+import manager.exception.InvalidUsername;
 import service.LoginService;
 
 import java.sql.SQLException;
